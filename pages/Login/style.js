@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         borderColor: '#1a8fff',
         paddingVertical: 3,
         paddingHorizontal: 3,
-        marginBottom: 10
+        marginBottom: 20
     },
 
     botao: {
