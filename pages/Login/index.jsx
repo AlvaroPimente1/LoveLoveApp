@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import auth from '@react-native-firebase/auth';
-import { SafeAreaView, View, Text, Image, TextInput, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, Text, Image, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert } from "react-native";
 import styles from "./style";
 
 export default function LoginScreen({ navigation }){
@@ -52,6 +52,12 @@ export default function LoginScreen({ navigation }){
                         <Text style={styles.botaoText}>Entrar</Text>
                     </TouchableOpacity>
                 </View>
+
+                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', paddingVertical: 8 }}
+                    onPress={() => navigation.navigate('CadastroScreen')}
+                >
+                    <Text style={styles.cadastroText}>Nao tem conta? Cadastre-se</Text>
+                </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
     )

@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     botaoText: {
         fontSize: 15,
         color: '#ffede6'
+    },
+
+    cadastroText: {
+        fontSize: 11,
+        color: '#1a8fff',
     }
 })
 
