@@ -1,31 +1,45 @@
 import React, { useState, useEffect } from "react";
 import firestore from '@react-native-firebase/firestore';
-import { SafeAreaView, View, Text, Image } from "react-native";
+import { SafeAreaView, View, Text, Image, TouchableOpacity } from "react-native";
 import styles from "./style";
+import getUserID from "../../utils/getUserID";
 
-export default function ParPerfil({ route }){
-        const { userId } = route.params; // Obtém o userId dos parâmetros de rota
-        const [userData, setUserData] = useState(null);
-    
+export default function ParPerfil({ route, navigation }){
+    const { userId } = route.params; 
+    const [ userData, setUserData ] = useState(null);
+
+    const userParRef = firestore().collection('usuarios').doc(userId);
+    const userRef = firestore().collection('usuarios').doc(getUserID());
+
     useEffect(() => {
-        const userRef = firestore().collection('usuarios').doc(userId);
-    
         const fetchUserData = async () => {
             try {
-            const userSnapshot = await userRef.get();
-            if (userSnapshot.exists) {
-                const userData = userSnapshot.data();
-                setUserData(userData);
+                const userSnapshot = await userParRef.get();
+                if (userSnapshot.exists) {
+                    const userData = userSnapshot.data();
+                    setUserData(userData);
             } else {
                 console.log("Documento de usuário não encontrado.");
             }
             } catch (error) {
-            console.error("Erro ao buscar informações do usuário:", error);
+                console.error("Erro ao buscar informações do usuário:", error);
             }
         };
     
         fetchUserData();
         }, [userId]);
+
+        const solicitarConexao = async() => {
+            await userRef.update({
+                solicitacao_feita: firestore.FieldValue.arrayUnion(userId)
+            })
+
+            await userParRef.update({
+                solicitacoes_recebidas: firestore.FieldValue.arrayUnion(getUserID())
+            })
+
+            navigation.goBack()
+        }
     
         return (
             <SafeAreaView style={styles.container}>
@@ -41,6 +55,11 @@ export default function ParPerfil({ route }){
                 ) : (
                 <Text>Carregando informações do usuário...</Text>
                 )}
+                <TouchableOpacity
+                    onPress={solicitarConexao}
+                >
+                    <Text>Conectar</Text>
+                </TouchableOpacity>
             </SafeAreaView>
         );
 }

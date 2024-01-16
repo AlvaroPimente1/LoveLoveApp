@@ -23,6 +23,7 @@ export default function LoginScreen({ navigation }){
                     .set({
                         nome: nome,
                         email: email,
+                        comprometido: false
                     });
             
                 console.log('Sessão de usuário criada');

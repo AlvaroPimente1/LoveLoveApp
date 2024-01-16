@@ -3,26 +3,46 @@ import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import { SafeAreaView, View, Text, TextInput, Image, TouchableOpacity, FlatList } from "react-native";
 import styles from "./style";
+import getUserID from "../../utils/getUserID";
 
 export default function HomeScreen(){
     const [ isComprometido, setIsComprometido ] = useState(false);
     const [ userId, setUserId ] = useState('');
     const [ userData, setUserData ] = useState(null);
-    const navigation = useNavigation(); // Inicialize o hook useNavigation
+    const [ isSolicitado, setIsSolicitado ] = useState(false);
 
+    const navigation = useNavigation();
+
+    // Navegar para perfil do usuario selecionado
     const navigateToUserProfile = (userId) => {
         navigation.navigate('ParPerfilScreen', { userId });
     };
 
-    const userRef = firestore()
-                .collection('usuarios')
-                .doc(userId);
+    const userRef = firestore().collection('usuarios').doc(getUserID());
+    const verificaUsuario = async() => {
+        try{
+            const userSnapshot =  await userRef.get()
+            const userData = userSnapshot.data()
+            if(Array.isArray(userData.solicitacao_feita) && userData.solicitacao_feita.length >= 1){
+                navigation.navigate('LoginScreen')
+            }
+        } catch(error){
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        verificaUsuario();
+    }, [])
+
+    // Carrega informacoes do usuario buscado
+    const userParRef = firestore().collection('usuarios').doc(userId);
 
     const fetchUserData = async () => {
         try {
-            const userSnapshot = await userRef.get();
-            if (userSnapshot.exists) {
-                const userData = userSnapshot.data();
+            const userParSnapshot = await userParRef.get();
+            if (userParSnapshot.exists) {
+                const userData = userParSnapshot.data();
                 setUserData(userData);
             } else {
                 console.log("Documento de usuário não encontrado.");
@@ -38,12 +58,6 @@ export default function HomeScreen(){
                 fetchUserData();
             }
         }, [userId]);
-
-        function renderItem({ item }){
-            <TouchableOpacity>
-                <Text></Text>
-            </TouchableOpacity>
-        }
 
     return(
         <SafeAreaView style={styles.container}>
@@ -68,7 +82,7 @@ export default function HomeScreen(){
                             style={styles.containerUser}
                         >
                             <View style={{ flexDirection: 'row' }}>
-                                <Image style={styles.perfilPar} source={require('../../assets/images/lovetwin.png')}/>
+                                <Image style={styles.perfilPar} source={require('../../assets/images/perfilTeste.jpeg')}/>
                                     <View style={{ flexDirection: 'column', paddingHorizontal: 10, justifyContent: 'center' }}>
                                         <Text>{userData.nome}</Text>
                                         <Text>{userData.email}</Text>
