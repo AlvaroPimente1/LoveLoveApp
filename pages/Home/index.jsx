@@ -63,13 +63,19 @@ export default function HomeScreen(){
             </View>
 
             {userData && (
-                <TouchableOpacity onPress={() => navigateToUserProfile(userId)}>
-                    <View>
-                        <Text>Nome: {userData.nome}</Text>
-                        <Text>Email: {userData.email}</Text>
-                        {/* Adicione outras informações do usuário aqui */}
+                    <View style={{ alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => navigateToUserProfile(userId)}
+                            style={styles.containerUser}
+                        >
+                            <View style={{ flexDirection: 'row' }}>
+                                <Image style={styles.perfilPar} source={require('../../assets/images/lovetwin.png')}/>
+                                    <View style={{ flexDirection: 'column', paddingHorizontal: 10, justifyContent: 'center' }}>
+                                        <Text>{userData.nome}</Text>
+                                        <Text>{userData.email}</Text>
+                                    </View>
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                </TouchableOpacity>
             )}
         </SafeAreaView>
     )

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import firestore from '@react-native-firebase/firestore';
-import { SafeAreaView, View, Text } from "react-native";
+import { SafeAreaView, View, Text, Image } from "react-native";
+import styles from "./style";
 
 export default function ParPerfil({ route }){
         const { userId } = route.params; // Obtém o userId dos parâmetros de rota
         const [userData, setUserData] = useState(null);
     
-        useEffect(() => {
+    useEffect(() => {
         const userRef = firestore().collection('usuarios').doc(userId);
     
         const fetchUserData = async () => {
@@ -27,16 +28,19 @@ export default function ParPerfil({ route }){
         }, [userId]);
     
         return (
-        <SafeAreaView>
-            {userData ? (
-            <View>
-                <Text>Nome: {userData.nome}</Text>
-                <Text>Email: {userData.email}</Text>
-                {/* Adicione outras informações do usuário aqui */}
-            </View>
-            ) : (
-            <Text>Carregando informações do usuário...</Text>
-            )}
-        </SafeAreaView>
+            <SafeAreaView style={styles.container}>
+                {userData ? (
+                    
+                <View style={{ alignItems: 'center' }}>
+                    <View style={styles.containerFoto}>
+                        <Image style={styles.fotoPerfil} source={require('../../assets/images/perfilTeste.jpeg')}/> 
+                    </View>
+                    <Text>Nome: {userData.nome}</Text>
+                    <Text>Email: {userData.email}</Text>
+                </View>
+                ) : (
+                <Text>Carregando informações do usuário...</Text>
+                )}
+            </SafeAreaView>
         );
 }

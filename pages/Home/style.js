@@ -31,6 +31,22 @@ const styles = StyleSheet.create({
     botaoText: {
         color: '#1a8fff',
         fontSize: 16
+    },
+
+    containerUser: {
+        backgroundColor: '#ebd9d2',
+        padding: 15,
+        borderRadius: 20,
+        borderWidth: 1, 
+        borderColor: '#1a8fff'
+    },
+
+    perfilPar: {
+        width: 70,
+        height: 70,
+        borderWidth: 1,
+        borderColor: '#1a8fff',
+        borderRadius: 25,
     }
 })
 
