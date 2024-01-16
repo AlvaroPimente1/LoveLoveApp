@@ -33,16 +33,21 @@ export default function PerfilScreen(){
         }, [getUserID()]);
     return(
         <SafeAreaView style={styles.container}>
-            <View style={styles.containerFoto}>
-                <Image style={styles.fotoPerfil} source={require('../../assets/images/perfilTeste.jpeg')}/> 
-            </View>
-            
-            <View style={{ justifyContent: 'center' }}>
-                <Text>{userData ? userData.nome : "Carregando..."}</Text>
-                <Text>{userData ? userData.email : "Carregando..."}</Text>
-                <TouchableOpacity onPress={copyToClipboard}>
-                    <Text>copiar Id</Text>
-                </TouchableOpacity>
+            <View style={{ alignItems: 'center', marginVertical: 50 }}>
+                <View style={styles.containerFoto}>
+                    <Image style={styles.fotoPerfil} source={require('../../assets/images/perfilTeste.jpeg')}/> 
+                </View>
+                
+                <View style={styles.containerInformacoes}>
+                    <Text>{userData ? userData.nome : "Carregando..."}</Text>
+                    <Text>{userData ? userData.email : "Carregando..."}</Text>
+                    <TouchableOpacity 
+                        style={styles.buttonCopy}
+                        onPress={copyToClipboard}
+                    >
+                        <Text style={styles.buttonCopyText}>Copiar Id</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
     )

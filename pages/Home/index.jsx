@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
-import { SafeAreaView, View, Text, TextInput, Image, TouchableOpacity, Animated, FlatList, ActivityIndicatorBase } from "react-native";
+import { SafeAreaView, View, Text, TextInput, Image, TouchableOpacity } from "react-native";
 import styles from "./style";
 import getUserID from "../../utils/getUserID";
 import PulsingHeart from "../../animated/pulserHeart";
@@ -12,14 +12,17 @@ export default function HomeScreen(){
     const [ isSolicitado, setIsSolicitado ] = useState(false);
 
     const navigation = useNavigation();
+    const userRef = firestore().collection('usuarios').doc(getUserID());
+    const userParRef = firestore().collection('usuarios').doc(userId);
 
     // Navegar para perfil do usuario selecionado
     const navigateToUserProfile = (userId) => {
         navigation.navigate('ParPerfilScreen', { userId });
     };
 
+
+    // Funcao para mudar componente caso usuario tenha solicitado conexao
     useEffect(() => {
-        const userRef = firestore().collection('usuarios').doc(getUserID());
     
         const unsubscribe = userRef.onSnapshot((doc) => {
             if (doc.exists) {
@@ -39,9 +42,8 @@ export default function HomeScreen(){
         return () => unsubscribe();
     }, []);
 
-    // Carrega informacoes do usuario buscado
-    const userParRef = firestore().collection('usuarios').doc(userId);
 
+    // Carrega informacoes do usuario buscado
     const fetchUserData = async () => {
         try {
             const userParSnapshot = await userParRef.get();
@@ -62,6 +64,35 @@ export default function HomeScreen(){
                 fetchUserData();
             }
         }, [userId]);
+
+
+
+        // Funcao para cancelar solicitacao de conexao
+        const cancelaSolicitacao = async () => {
+            try {
+                const snapshotUser = await userRef.get();
+                const userData = snapshotUser.data();
+        
+                if (userData && userData.solicitacao_feita) {
+                    await userRef.update({
+                        solicitacao_feita: firestore.FieldValue.arrayRemove(userId)
+                    });
+
+                const snapshotParUser = await userParRef.get();
+                const userParData = snapshotParUser.data();
+
+                if(userParData && userParData.solicitacoes_recebidas){
+                    await userParRef.update({
+                        solicitacoes_recebidas: firestore.FieldValue.arrayRemove(getUserID())
+                    });
+                }
+        
+                    console.log('Solicitação cancelada com sucesso.');
+                }
+            } catch (error) {
+                console.error('Erro ao cancelar a solicitação:', error);
+            }
+        };
 
         return (
             <SafeAreaView style={styles.container}>
@@ -107,6 +138,7 @@ export default function HomeScreen(){
                                 <Text>Solicitação enviada para Alvaro</Text>
                                 <TouchableOpacity
                                     style={styles.botaoCancelar}
+                                    onPress={cancelaSolicitacao}
                                 >
                                     <Text style={styles.textButton}>Cancelar solicitação</Text>
                                 </TouchableOpacity>

@@ -11,11 +11,32 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         borderRadius: 25,
-        borderWidth: 2,
+        borderWidth: 0.5,
         borderColor: '#1a8fff'
     },
 
     containerFoto: {
+    },
+
+    containerInformacoes: {
+        marginVertical: 20,
+        backgroundColor: '#ebd9d2',
+        padding: 30,
+        borderRadius: 30,
+        alignItems: 'center',
+        borderWidth: 0.5,
+        borderColor: '#1a8fff'
+    },
+
+    buttonCopy: {
+        backgroundColor: '#1a8fff',
+        padding: 10,
+        marginTop: 15,
+        borderRadius: 50
+    },
+
+    buttonCopyText: {
+        color: '#ffede6'
     }
 })
 
