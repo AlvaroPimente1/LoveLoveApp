@@ -6,7 +6,7 @@ import LoginScreen from "../../pages/Login/index";
 import CadastroScreen from "../../pages/Cadastro";
 import ParPerfil from "../../pages/ParPerfil";
 
-import TabNavigator from "../tab/routes";
+import DrawerNavigator from "../drawer/routes";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +16,7 @@ export default function Routes(){
             <Stack.Navigator>
                 <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="CadastroScreen" component={CadastroScreen} options={{ headerShown: false }}/>
-                <Stack.Screen name="HomeScreen" component={TabNavigator} options={{ headerShown: false }}/>
+                <Stack.Screen name="HomeScreen" component={DrawerNavigator} options={{ headerShown: false }}/>
                 <Stack.Screen name="ParPerfilScreen" component={ParPerfil} options={{ headerShown: true }}/>
             </Stack.Navigator>
         </NavigationContainer>
