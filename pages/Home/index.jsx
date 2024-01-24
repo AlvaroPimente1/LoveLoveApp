@@ -70,6 +70,7 @@ export default function HomeScreen(){
         // Funcao para cancelar solicitacao de conexao
         const cancelaSolicitacao = async () => {
             try {
+                console.log('funcionando')
                 const snapshotUser = await userRef.get();
                 const userData = snapshotUser.data();
         

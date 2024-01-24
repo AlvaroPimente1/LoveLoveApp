@@ -7,10 +7,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffede6',
     },
 
-    containerSolicitacao: {
-        padding: 10,
+    containerUsuarios: {
+        marginVertical: 10,
+        // backgroundColor: '#000',
+        padding: 20,
         backgroundColor: '#ebd9d2',
-        marginVertical: 50
+        borderRadius: 30
+    },
+
+    perfil: {
+        width: 70, 
+        height: 70,
+        borderRadius: 35
     }
 })
 
