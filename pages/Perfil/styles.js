@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         alignItems: 'center',
         borderWidth: 0.5,
-        borderColor: '#1a8fff'
+        borderColor: '#1a8fff',
+        minWidth: 300,
+        maxWidth: 300
     },
 
     buttonCopy: {
@@ -37,6 +39,18 @@ const styles = StyleSheet.create({
 
     buttonCopyText: {
         color: '#ffede6'
+    },
+
+    iconEdit: {
+        width: 22,
+        height: 22,
+    },
+
+    buttonEdit: {
+        backgroundColor: '#1a8fff',
+        marginTop: 10,
+        padding: 8,
+        borderRadius: 20 
     }
 })
 

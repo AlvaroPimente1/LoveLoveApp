@@ -43,21 +43,22 @@ export default function NotificationsScreen({ navigation }) {
             const users = await Promise.all(userIds.map(async (id) => {
                 const userSnapshot = await firestore()
                     .collection('usuarios')
-                    .where(firestore.FieldPath.documentId(), '==', id)
+                    .doc(id) // Alterado para acessar diretamente o documento pelo ID
                     .get();
-
-                if (!userSnapshot.empty) {
-                    return userSnapshot.docs[0].data();
+    
+                if (userSnapshot.exists) {
+                    return { id, ...userSnapshot.data() }; // Incluindo o ID no objeto retornado
                 } else {
                     return null;
                 }
             }));
-
+    
             setUserInfo(users.filter(user => user != null));
         } catch (error) {
             console.error('Erro ao buscar detalhes do usuário:', error);
         }
     };
+    
 
     function renderItem({ item }){
         return(
