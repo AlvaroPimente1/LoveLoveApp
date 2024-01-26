@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import auth from '@react-native-firebase/auth';
 import { SafeAreaView, View, Text, Image, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert } from "react-native";
 import styles from "./style";
+import verificaCasal from "../../utils/verificaCasal";
 
 export default function LoginScreen({ navigation }){
     const [ email, setEmail ] = useState('');
@@ -11,7 +12,11 @@ export default function LoginScreen({ navigation }){
         try{
             await auth()
             .signInWithEmailAndPassword(email, senha)
-            navigation.navigate('HomeScreen');
+            if(await verificaCasal()){
+                navigation.navigate('DrawerNavigatorCasal');
+            } else {
+                navigation.navigate('HomeScreen');
+            }
         }
         catch(error){
             if (error.code === 'auth/user-not-found') {
