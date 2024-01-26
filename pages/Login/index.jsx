@@ -12,6 +12,7 @@ export default function LoginScreen({ navigation }){
         try{
             await auth()
             .signInWithEmailAndPassword(email, senha)
+
             if(await verificaCasal()){
                 navigation.navigate('DrawerNavigatorCasal');
             } else {
