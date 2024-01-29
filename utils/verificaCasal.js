@@ -3,6 +3,7 @@ import getUserID from './getUserID';
 
 export default async function verificaCasal(){
     const userID = getUserID();
+
     try{
         const userRef = (await firestore().collection('usuarios').doc(userID)).get();
 

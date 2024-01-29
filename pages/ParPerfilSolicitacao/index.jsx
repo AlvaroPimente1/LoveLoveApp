@@ -37,7 +37,7 @@ export default function ParPerfilSolicitacaoScreen({ route, navigation }){
                 userRef2: user.id
             })
 
-            navigation.navigate('AreaCasalScreen');
+            navigation.navigate('DrawerNavigatorCasal');
         } catch (error) {
             console.error(error);
         }

@@ -10,14 +10,24 @@ export default function OptionsScreen({ navigation }){
     
     const desconectarUsuarios = async() => {
         try{
+            const userRefData = (await userRef.get()).data()
+
+            const parId = userRefData.parceiroRef;
+            const userParRef = firestore().collection('usuarios').doc(parId);
+
+            await userParRef.update({
+                comprometido: false,
+                parceiroRef: null
+            })
+
             await userRef.update({
-                comprometido: false
+                comprometido: false,
+                parceiroRef: null
             })
 
             auth()
             .signOut()
             .then(() => navigation.navigate('LoginScreen'));
-            console.log('certo');
         } catch(error) {
             console.error(error);
         }
