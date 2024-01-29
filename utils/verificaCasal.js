@@ -3,22 +3,18 @@ import getUserID from './getUserID';
 
 export default async function verificaCasal(){
     const userID = getUserID();
-    const casaisCollectionRef = firestore().collection('casais');
-    try {
-        const querySnapshot1 = await casaisCollectionRef
-            .where('userRef1', '==', userID)
-            .get();
+    try{
+        const userRef = (await firestore().collection('usuarios').doc(userID)).get();
 
-        const querySnapshot2 = await casaisCollectionRef
-            .where('userRef2', '==', userID)
-            .get();
+        const dadosUsuario = (await userRef).data()
 
-        if (!querySnapshot1.empty || !querySnapshot2.empty) {
-            return true;
+        if(dadosUsuario.comprometido){
+            return true
         } else {
-            return false;
+            return false
         }
-    } catch (error) {
+        
+    } catch(error) {
         console.error(error);
     }
     }
