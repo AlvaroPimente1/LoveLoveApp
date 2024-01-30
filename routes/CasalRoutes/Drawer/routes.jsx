@@ -4,7 +4,7 @@ import LogOutButton from "../../../components/LogOut";
 
 import AreaCasal from "../../../pages/AreaCasal";
 import PerfilScreen from "../../../pages/Perfil";
-import OptionsScreen from "../../../pages/Options";
+import OptionsScreen from "../../../pages/Desconectar";
 
 const Drawer = createDrawerNavigator();
 
@@ -22,7 +22,6 @@ export default function DrawerNavigatorCasal(){
             }}
         >
             <Drawer.Screen name="AreaCasalScreen" component={AreaCasal}/>
-            <Drawer.Screen name="OptionsScreen" component={OptionsScreen}/>
             <Drawer.Screen name="PerfilScreen" component={PerfilScreen}/>
         </Drawer.Navigator>
     )

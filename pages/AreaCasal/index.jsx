@@ -4,7 +4,7 @@ import styles from "./style";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
 
-export default function AreaCasal() {
+export default function AreaCasal({ navigation }) {
     const [ dadosCasal, setDadosCasal ] = useState(null);
     const [ dadosUsuario1, setDadosUsuario1 ] = useState(null);
     const [ dadosUsuario2, setDadosUsuario2 ] = useState(null);
@@ -83,28 +83,45 @@ export default function AreaCasal() {
                         <View style={{ marginHorizontal: 10, marginTop: 8 }}>
 
                             <View style={styles.containerOpcoes}>
-                                <TouchableOpacity style={styles.ButtonOpcoes}>
+                                <TouchableOpacity style={styles.ButtonOpcoes}
+                                    onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
+                                >
                                     <Image style={styles.IconButton} source={require('../../assets/images/calendarioIcon.png')}/>
                                     <Text style={styles.textBox}>Calendário</Text>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={styles.ButtonOpcoes}>
+                                <TouchableOpacity style={styles.ButtonOpcoes}
+                                    onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
+                                >
                                 <Image style={styles.IconButton} source={require('../../assets/images/mailIcon.png')}/>
                                     <Text style={styles.textBox}>Mensagens</Text>
                                 </TouchableOpacity>
                             </View>
 
-                            <View style={styles.containerOpcoes}>
+                            <View style={styles.containerOpcoes}
+                                onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
+                            >
                                 <TouchableOpacity style={styles.ButtonOpcoes}>
                                 <Image style={styles.IconButton} source={require('../../assets/images/restaurantIcon.png')}/>
                                     <Text style={styles.textBox}>Dates</Text>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={styles.ButtonOpcoes}>
-                                <Image style={styles.IconButton} source={require('../../assets/images/settings.png')}/>
-                                    <Text style={styles.textBox}>Configurações</Text>
+                                <TouchableOpacity style={styles.ButtonOpcoes}
+                                    onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
+                                >
+                                <Image style={styles.IconButton} source={require('../../assets/images/Amigos.png')}/>
+                                    <Text style={styles.textBox}>Casais Amigos</Text>
                                 </TouchableOpacity>
                             </View>
+
+                        <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
+                            <TouchableOpacity style={styles.ButtonOpcoesDanger}
+                                    onPress={() => navigation.navigate('TerminoScreen', { casalId: casalId })}
+                            >
+                                <Image style={styles.IconButton} source={require('../../assets/images/danger.png')}/>
+                                <Text style={styles.textBox}>Perigo</Text>
+                            </TouchableOpacity>
+                        </View>
                         </View>
                     </ScrollView>
                 </SafeAreaView>

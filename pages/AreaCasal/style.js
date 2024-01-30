@@ -44,6 +44,19 @@ const styles = StyleSheet.create({
         textAlign: 'center',  
     },
 
+    ButtonOpcoesDanger: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ff7e93',
+        minWidth: 150,
+        width: '40%',
+        height: 150,
+        borderRadius: 40,
+        borderWidth: 2,
+        borderColor: '#1a8fff',
+        textAlign: 'center',  
+    },
+
     textBox: {
         color: '#fff',
         marginTop: 5,

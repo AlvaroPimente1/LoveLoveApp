@@ -11,46 +11,79 @@ export default function ParPerfilSolicitacaoScreen({ route, navigation }){
     const userRef = colecaoUserRef.doc(getUserID());
     const userParRef = colecaoUserRef.doc(user.id);
 
-    const casalRef = firestore().collection('casais');
+    const casaisCollectionRef = firestore().collection('casais');
 
     const cleanArrays = {
         solicitacoes_recebidas: [],
         solicitacao_feita: []
     }
 
-    const aceitaSolicitacao = async() => {
-        try{
-            await userRef.update({
-                comprometido: true,
-                parceiroRef: user.id,
-                ...cleanArrays
-            })
+    const aceitaSolicitacao = async () => {
+        try {
+            const userId = getUserID();
+            const parId = user.id;
+            
+            const casaisSnapshot1 = await casaisCollectionRef
+                .where('userRef1', '==', userId)
+                .where('userRef2', '==', parId)
+                .get();
+    
+            const casaisSnapshot2 = await casaisCollectionRef
+                .where('userRef1', '==', parId)
+                .where('userRef2', '==', userId)
+                .get();
+    
+            const casalExiste = !casaisSnapshot1.empty || !casaisSnapshot2.empty;
+    
+            if (!casalExiste) {
+                await Promise.all([
+                    userRef.update({
+                        comprometido: true,
+                        parceiroRef: parId,
+                        ...cleanArrays
+                    }),
+                    userParRef.update({
+                        comprometido: true,
+                        parceiroRef: userId,
+                        ...cleanArrays
+                    }),
+                    casaisCollectionRef.add({
+                        userRef1: userId,
+                        userRef2: parId
+                    })
+                ]);
+                
+                navigation.navigate('RotasCasal');
 
-            await userParRef.update({
-                comprometido: true,
-                parceiroRef: getUserID(),
-                ...cleanArrays
-            })
+            } else {
+                await Promise.all([
+                    userRef.update({
+                        comprometido: true,
+                        parceiroRef: parId,
+                        ...cleanArrays
+                    }),
+                    userParRef.update({
+                        comprometido: true,
+                        parceiroRef: userId,
+                        ...cleanArrays
+                    }),
+                ]);
 
-            await casalRef.add({
-                userRef1: getUserID(),
-                userRef2: user.id
-            })
-
-            navigation.navigate('DrawerNavigatorCasal');
+                navigation.navigate('RotasCasal');
+            }
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     const cancelaSolicitacao = async() => {
         try{
             await userRef.update({
-                cleanArrays
+                ...cleanArrays
             })
 
             await userRef.update({
-                cleanArrays
+                ...cleanArrays
             })
         } catch(error){
             console.error(error);
