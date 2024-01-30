@@ -5,7 +5,7 @@ import getUserID from "../../utils/getUserID";
 import { SafeAreaView, View, Text, Image, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert } from "react-native";
 import styles from "./style";
 
-export default function LoginScreen({ navigation }){
+export default function CadastroScreen({ navigation }){
     const [ email, setEmail ] = useState('');
     const [ senha, setSenha ] = useState('');
     const [ nome, setNome ] = useState('');

@@ -1,14 +1,14 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import LogOutButton from "../../components/LogOut";
+import LogOutButton from "../../../components/LogOut";
 
-import HomeScreen from "../../pages/Home";
-import NotificationsScreen from "../../pages/Notifications";
-import PerfilScreen from "../../pages/Perfil";
+import AreaCasal from "../../../pages/AreaCasal";
+import PerfilScreen from "../../../pages/Perfil";
+import OptionsScreen from "../../../pages/Options";
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerNavigator(){
+export default function DrawerNavigatorCasal(){
     return(
         <Drawer.Navigator drawerContent={(props) => <LogOutButton {...props} />}
             screenOptions={{
@@ -17,12 +17,12 @@ export default function DrawerNavigator(){
                 },
                 headerTintColor: '#fff', 
                 headerTitleStyle: {
-                    fontWeight: 'bold', 
+                    fontWeight: 'bold',
                 },
             }}
         >
-            <Drawer.Screen name="HomeScreen" component={HomeScreen}/>
-            <Drawer.Screen name="NotificationsScreen" component={NotificationsScreen}/>
+            <Drawer.Screen name="AreaCasalScreen" component={AreaCasal}/>
+            <Drawer.Screen name="OptionsScreen" component={OptionsScreen}/>
             <Drawer.Screen name="PerfilScreen" component={PerfilScreen}/>
         </Drawer.Navigator>
     )

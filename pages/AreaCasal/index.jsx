@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, View, Image, ScrollView, Button } from "react-native";
+import { SafeAreaView, Text, View, Image, ScrollView, Button, TouchableOpacity } from "react-native";
 import styles from "./style";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
 
 export default function AreaCasal() {
-    const [dadosCasal, setDadosCasal] = useState(null);
-    const [dadosUsuario1, setDadosUsuario1] = useState(null);
-    const [dadosUsuario2, setDadosUsuario2] = useState(null);
+    const [ dadosCasal, setDadosCasal ] = useState(null);
+    const [ dadosUsuario1, setDadosUsuario1 ] = useState(null);
+    const [ dadosUsuario2, setDadosUsuario2 ] = useState(null);
+    const [ casalId, setCasalId ] = useState(null);
 
     const localizaColecaoCasal = async () => {
         const userID = getUserID();
@@ -17,18 +18,22 @@ export default function AreaCasal() {
             const querySnapshot = await casaisCollectionRef
                 .where('userRef1', '==', userID)
                 .get();
-
+    
             if (!querySnapshot.empty) {
-                casalData = querySnapshot.docs[0].data();
+                const doc = querySnapshot.docs[0];
+                casalData = doc.data();
+                setCasalId(doc.id); 
             } else {
                 const querySnapshot2 = await casaisCollectionRef
                     .where('userRef2', '==', userID)
                     .get();
                 if (!querySnapshot2.empty) {
-                    casalData = querySnapshot2.docs[0].data();
+                    const doc = querySnapshot2.docs[0];
+                    casalData = doc.data();
+                    setCasalId(doc.id); 
                 }
             }
-
+    
             if (casalData) {
                 setDadosCasal(casalData);
                 await fetchDadosCasal(casalData);
@@ -59,23 +64,53 @@ export default function AreaCasal() {
     }, []);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <>
             {dadosCasal && dadosUsuario1 && dadosUsuario2 ? (
-                <View>
+                <SafeAreaView style={styles.container}>
                     <View style={styles.banner}>
-                        <Image style={styles.icon} source={require('../../assets/images/perfilTeste.jpeg')} /> 
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Image style={styles.icon} source={require('../../assets/images/perfilTeste.jpeg')} /> 
                         
-                        <Image style={styles.icon} source={require('../../assets/images/perfilTeste.jpeg')} /> 
+                            <Image style={styles.icon} source={require('../../assets/images/marilia.jpeg')} /> 
+                        </View>
+
+                        <View style={{ marginHorizontal: '5%' }}>
+                            <Text style={{ fontSize: 30, color: '#fff' }}>Bem vindos, marilialv!</Text>
+                            <Text style={styles.textBox}>{dadosUsuario1.nome} e {dadosUsuario2.nome}</Text>
+                        </View>
                     </View>
-                    <ScrollView>
+                    <ScrollView style={{ flex: 2 }}>
                         <View style={{ marginHorizontal: 10, marginTop: 8 }}>
-                        <Text style={{ fontSize: 23 }}>Bem vindos, {dadosUsuario1.nome} e {dadosUsuario2.nome}!</Text>
+
+                            <View style={styles.containerOpcoes}>
+                                <TouchableOpacity style={styles.ButtonOpcoes}>
+                                    <Image style={styles.IconButton} source={require('../../assets/images/calendarioIcon.png')}/>
+                                    <Text style={styles.textBox}>Calendário</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.ButtonOpcoes}>
+                                <Image style={styles.IconButton} source={require('../../assets/images/mailIcon.png')}/>
+                                    <Text style={styles.textBox}>Mensagens</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={styles.containerOpcoes}>
+                                <TouchableOpacity style={styles.ButtonOpcoes}>
+                                <Image style={styles.IconButton} source={require('../../assets/images/restaurantIcon.png')}/>
+                                    <Text style={styles.textBox}>Dates</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.ButtonOpcoes}>
+                                <Image style={styles.IconButton} source={require('../../assets/images/settings.png')}/>
+                                    <Text style={styles.textBox}>Configurações</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </ScrollView>
-                </View>
+                </SafeAreaView>
             ) : (
                 <Text>Carregando informaçoes...</Text>
             )}
-        </SafeAreaView>
+        </>
     );
 }

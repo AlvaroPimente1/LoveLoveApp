@@ -8,13 +8,12 @@ const styles = StyleSheet.create({
     
     banner: {
         width: '100%',
-        height: '55%',
+        height: '40%',
         backgroundColor: '#1a8fff',
-        flexDirection: 'row',
-        alignItems: 'center',
         justifyContent: 'space-evenly',
         borderBottomStartRadius: 40,
         borderBottomEndRadius: 40, 
+        borderColor: '#000',
     },
 
     icon: {
@@ -22,11 +21,37 @@ const styles = StyleSheet.create({
         height: 130, 
         borderRadius: 100,
         borderWidth: 1,
-        borderColor: '#fff'
+        borderColor: '#fff',
+        marginHorizontal: 20
     }, 
 
-    carrosel: {
-        
+    containerOpcoes: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginVertical: 20,
+    },
+
+    ButtonOpcoes: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#1a8fff',
+        minWidth: 150,
+        width: '40%',
+        height: 150,
+        borderRadius: 40,
+        borderWidth: 2,
+        borderColor: '#ff7e93',
+        textAlign: 'center',  
+    },
+
+    textBox: {
+        color: '#fff',
+        marginTop: 5,
+    },
+
+    IconButton: {
+        width: 50,
+        height: 50,
     }
 })
 

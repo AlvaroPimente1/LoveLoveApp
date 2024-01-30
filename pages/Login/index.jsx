@@ -14,9 +14,9 @@ export default function LoginScreen({ navigation }){
             .signInWithEmailAndPassword(email, senha)
 
             if(await verificaCasal()){
-                navigation.navigate('DrawerNavigatorCasal');
+                navigation.navigate('RotasCasal');
             } else {
-                navigation.navigate('HomeScreen');
+                navigation.navigate('RotasSolteiro');
             }
         }
         catch(error){
