@@ -4,12 +4,26 @@ import getUserID from "../../utils/getUserID";
 import { SafeAreaView, Text, View, Alert, TouchableOpacity, Image, TextInput } from "react-native";
 import Clipboard from '@react-native-clipboard/clipboard';
 import styles from "./styles";
+import getPermission from "../../utils/getPermission";
+import { launchImageLibrary } from "react-native-image-picker";
 
 export default function PerfilScreen(){
     const [ userData, setUserData ] = useState(null);
     const [ isEdit, setIsEdit ] = useState(false);
     const [ nome, setNome ] = useState('');
     const [ bio, setBio ] = useState('');
+
+    const ImageGallery = () => {
+        let options = {
+            storageOptions: {
+                path: 'image'
+            }
+        }
+
+        launchImageLibrary(options, response => {
+            console.log(response);
+        })
+    }
 
     const handleSetEdit = () => {
         if(isEdit){
@@ -92,6 +106,11 @@ export default function PerfilScreen(){
                         onPress={handleSetEdit}
                         >
                             <Image style={styles.iconEdit} source={require('../../assets/images/edit.png')}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonEdit} 
+                            onPress={ImageGallery}
+                        >
+                            <Text>PERMISSAO</Text>
                         </TouchableOpacity>
                     </View>
                 }

@@ -25,7 +25,7 @@ export default function TerminoScreen({ navigation }){
     };
 
     useEffect(() => {
-        const intervalId = setInterval(fetchConselho, 2000); 
+        const intervalId = setInterval(fetchConselho, 4000); 
 
         return () => clearInterval(intervalId);
     }, []);
@@ -50,7 +50,7 @@ export default function TerminoScreen({ navigation }){
 
             auth()
             .signOut()
-            .then(() => navigation.navigate('LoginScreen'));
+            .then(() => navigation.navigate('RotasSolteiro'));
         } catch(error) {
             console.error(error);
         }

@@ -59,12 +59,11 @@ export default function HomeScreen(){
             }
         }
 
-        useEffect(() => {
+/*         useEffect(() => {
             if (userId) {
                 fetchUserData();
             }
-        }, [userId]);
-
+        }, [userId]); */
 
 
         // Funcao para cancelar solicitacao de conexao

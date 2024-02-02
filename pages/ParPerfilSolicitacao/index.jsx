@@ -3,9 +3,11 @@ import styles from "./style";
 import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
+import CriarShipp from "../../utils/criaShipp";
 
 export default function ParPerfilSolicitacaoScreen({ route, navigation }){
     const user = route.params.user;
+    const [ shippCasal, setShippCasal ] = useState('');
 
     const colecaoUserRef = firestore().collection('usuarios');
     const userRef = colecaoUserRef.doc(getUserID());
@@ -79,11 +81,11 @@ export default function ParPerfilSolicitacaoScreen({ route, navigation }){
     const cancelaSolicitacao = async() => {
         try{
             await userRef.update({
-                ...cleanArrays
+                solicitacoes_recebidas: firestore.FieldValue.arrayRemove(user.id)
             })
 
-            await userRef.update({
-                ...cleanArrays
+            await userParRef.update({
+                solicitacao_feita: []
             })
         } catch(error){
             console.error(error);
