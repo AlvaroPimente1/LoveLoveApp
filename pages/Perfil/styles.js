@@ -5,17 +5,20 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#ffede6',
+        justifyContent: 'center'
     },
 
     fotoPerfil: {
-        width: 200,
-        height: 200,
+        width: 250,
+        height: 250,
         borderRadius: 25,
-        borderWidth: 0.5,
+        borderWidth: 1,
         borderColor: '#1a8fff'
     },
 
     containerFoto: {
+        alignItems: 'center',
+        justifyContent: 'center'
     },
 
     containerInformacoes: {
@@ -42,15 +45,48 @@ const styles = StyleSheet.create({
     },
 
     iconEdit: {
+        width: 15,
+        height: 15,
+    },
+
+    iconSave: {
         width: 22,
         height: 22,
     },
 
     buttonEdit: {
         backgroundColor: '#1a8fff',
-        marginTop: 10,
+        marginLeft: 5,
+        padding: 3,
+        borderRadius: 20 
+    },
+
+    buttonSave: {
+        backgroundColor: '#1a8fff',
+        marginTop: 8,
         padding: 8,
         borderRadius: 20 
+    },
+
+    textData: {
+        fontSize: 17
+    },
+
+    inputText: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#1a8fff',
+        width: '100%'
+    }, 
+
+    containerIcons: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#1a8fff',
+        width: '30%',
+        padding: 15,
+        borderBottomEndRadius: 20,
+        borderBottomStartRadius: 20
     }
 })
 
