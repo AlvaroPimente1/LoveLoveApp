@@ -47,7 +47,7 @@ export default function ParPerfil({ route, navigation }){
                     
                 <View style={{ alignItems: 'center' }}>
                     <View style={styles.containerFoto}>
-                        <Image style={styles.fotoPerfil} source={require('../../assets/images/perfilTeste.jpeg')}/> 
+                        <Image style={styles.fotoPerfil} source={{ uri: userData.image }}/> 
                     </View>
                     <Text>Nome: {userData.nome}</Text>
                     <Text>Email: {userData.email}</Text>

@@ -120,7 +120,7 @@ export default function HomeScreen(){
                                         style={styles.containerUser}
                                     >
                                         <View style={{ flexDirection: 'row' }}>
-                                            <Image style={styles.perfilPar} source={require('../../assets/images/perfilTeste.jpeg')}/>
+                                            <Image style={styles.perfilPar} source={{ uri: userData.image }}/>
                                             <View style={{ flexDirection: 'column', paddingHorizontal: 10, justifyContent: 'center' }}>
                                                 <Text>{userData.nome}</Text>
                                                 <Text>{userData.email}</Text>
@@ -135,7 +135,7 @@ export default function HomeScreen(){
                             <PulsingHeart/>
     
                             <View style={styles.containerSolicitacao}>
-                                <Text>Solicitação enviada para Alvaro</Text>
+                                <Text>Solicitação enviada</Text>
                                 <TouchableOpacity
                                     style={styles.botaoCancelar}
                                     onPress={cancelaSolicitacao}

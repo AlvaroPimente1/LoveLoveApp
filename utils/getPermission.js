@@ -11,6 +11,7 @@ export default async function getPermission() {
             if (permissionStatus === RESULTS.DENIED) {
                 permissionStatus = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
             }
+
         } else {
             permissionStatus = await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
         }

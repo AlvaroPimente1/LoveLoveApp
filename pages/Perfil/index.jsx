@@ -7,12 +7,24 @@ import styles from "./styles";
 import getPermission from "../../utils/getPermission";
 import { launchImageLibrary } from "react-native-image-picker";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import uploadImageStorage from "../../utils/uploadStorage";
 
 export default function PerfilScreen(){
     const [ userData, setUserData ] = useState(null);
     const [ isEdit, setIsEdit ] = useState(false);
-    const [ nome, setNome ] = useState(userData ? userData.nome : '');
+    const [ nome, setNome ] = useState(userData ? userData.nome : ''); 
     const [ image, setImage ] = useState('');
+
+    const saveImageUrlToUser = async () => {
+        const userId = getUserID(); 
+        try {
+            await firestore().collection('usuarios').doc(userId).update({
+                image: image,
+            });
+        } catch (error) {
+            console.error("Erro ao atualizar o documento do usuário:", error);
+        }
+    };
 
     const ImageGallery = () => {
         let options = {
@@ -26,19 +38,25 @@ export default function PerfilScreen(){
         };
 
         if(getPermission()){
-            try{
-                launchImageLibrary(options, response => {
+            try {
+                launchImageLibrary(options, async response => {
                     if(response.assets != undefined){
-                        const uri = response.assets[0].uri
-                        setImage(uri);
-                        console.log(response);
+                        const uri = response.assets[0].uri;
+                        const url = await uploadImageStorage(uri);
+                        setImage(url); 
+                        try{
+                            await saveImageUrlToUser();
+                        } catch(error){
+                            console.error(error);
+                        }
                     } 
-                })
+                });
             } catch(error) {
                 console.log(error);
             }
         }
     }
+
 
     const removePhoto = () => {
         setImage(null);
@@ -80,22 +98,23 @@ export default function PerfilScreen(){
         <SafeAreaView style={styles.container}>
                 <View style={styles.containerFoto}>
                     {
-                        image ? 
+                        image || (userData && userData.image) ? 
                         <View style={styles.containerFoto}>
-                            <Image style={styles.fotoPerfil} source={{ uri: image }}/> 
+                            <Image style={styles.fotoPerfil} source={{ uri: image || userData.image }}/> 
+
                             <View style={styles.containerIcons}>
-                                <TouchableOpacity style={styles.containerFoto} onPress={removePhoto}>                            
+                                <TouchableOpacity style={styles.containerFoto} onPress={() => ImageGallery()}>
                                     <Icon name="camera" size={20} color="#fff" />
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={styles.containerFoto} onPress={removePhoto}>                            
+                                <TouchableOpacity style={styles.containerFoto} onPress={() => removePhoto()}>                            
                                     <Icon name="remove" size={20} color="#fff" />
                                 </TouchableOpacity>
                             </View>
                         </View>
                         : 
                         <View>
-                            <TouchableOpacity style={styles.containerFoto} onPress={ImageGallery}>
+                            <TouchableOpacity style={styles.containerFoto} onPress={() => ImageGallery()}>
                                 <Text>Adicionar Imagem</Text>
                             </TouchableOpacity>
                         </View>
@@ -130,11 +149,12 @@ export default function PerfilScreen(){
                                 <Image style={styles.iconEdit} source={require('../../assets/images/edit.png')}/>
                             </TouchableOpacity>
                         </View>
+                        <Text>{userData ? userData.email : "Carregando..."}</Text>
                         <TouchableOpacity 
                             style={styles.buttonCopy}
                             onPress={copyToClipboard}
                         >
-                            <Text style={styles.buttonCopyText}>Copiar Id</Text>
+                            <Text style={styles.buttonCopyText}>Copiar UID</Text>
                         </TouchableOpacity>
                     </View>
                 }

@@ -69,9 +69,9 @@ export default function AreaCasal({ navigation }) {
                 <SafeAreaView style={styles.container}>
                     <View style={styles.banner}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Image style={styles.icon} source={require('../../assets/images/perfilTeste.jpeg')} /> 
+                            <Image style={styles.icon} source={{ uri: dadosUsuario1.image }} /> 
                         
-                            <Image style={styles.icon} source={require('../../assets/images/marilia.jpeg')} /> 
+                            <Image style={styles.icon} source={{ uri: dadosUsuario2.image }} /> 
                         </View>
 
                         <View style={{ marginHorizontal: '5%' }}>

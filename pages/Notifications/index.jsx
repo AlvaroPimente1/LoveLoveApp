@@ -66,7 +66,7 @@ export default function NotificationsScreen({ navigation }) {
                 onPress={() => navigation.navigate('ParPerfilSolicitacaoScreen', { user: item })}
             >
                 <View style={{ flexDirection: 'row' }}>
-                    <Image style={styles.perfil} source={require('../../assets/images/perfilTeste.jpeg')}/>
+                    <Image style={styles.perfil} source={{ uri: item.image }}/>
                     <View style={{ flexDirection: 'column', justifyContent: 'center', marginLeft: 5 }}>
                         <Text>{item.nome}</Text>
                         <Text>{item.email}</Text>

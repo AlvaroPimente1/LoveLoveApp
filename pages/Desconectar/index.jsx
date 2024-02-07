@@ -50,7 +50,7 @@ export default function TerminoScreen({ navigation }){
 
             auth()
             .signOut()
-            .then(() => navigation.navigate('RotasSolteiro'));
+            .then(() => navigation.navigate('LoginScreen'));
         } catch(error) {
             console.error(error);
         }

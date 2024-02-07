@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./style";
-import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, Text, TouchableOpacity, Image } from "react-native";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
 import CriarShipp from "../../utils/criaShipp";
@@ -94,6 +94,7 @@ export default function ParPerfilSolicitacaoScreen({ route, navigation }){
 
     return(
         <SafeAreaView style={styles.container}>
+            <Image style={{ width: 200, height: 200, borderRadius: 50 }} source={{ uri: user.image }}/>
             <Text>{user.nome}</Text>
             <Text>{user.email}</Text>
             <TouchableOpacity onPress={aceitaSolicitacao}>
