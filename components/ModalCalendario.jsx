@@ -23,7 +23,7 @@ export default function ModalAgenda({ isModalVisible, setModalVisible, addEvent 
                         value={tituloCompromisso}
                         onChangeText={setTituloCompromisso}
                         placeholder="Digite o titulo"
-                        placeholderTextColor={'#fff'}
+                        placeholderTextColor={'#000'}
                     />
                     
                     <TextInput
@@ -31,7 +31,7 @@ export default function ModalAgenda({ isModalVisible, setModalVisible, addEvent 
                         value={descricaoCompromisso}
                         onChangeText={setDescricaoCompromisso}
                         placeholder="Digite a descrição"
-                        placeholderTextColor={'#fff'}
+                        placeholderTextColor={'#000'}
                     />
         
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 
     modalView: {
         width: '80%',
-        backgroundColor: "#333333",
+        backgroundColor: "#fff",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -82,21 +82,21 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         borderWidth: 1,
-        borderColor: '#663399'
+        borderColor: '#fff'
     },
 
     input: {
         width: '100%',
         padding: 10,
-        borderColor: '#663399',
+        borderColor: '#000',
         borderWidth: 1,
         marginBottom: 10,
         borderRadius: 5,
-        color: '#fff'
+        color: '#000'
     },
 
     button: {
-        backgroundColor: '#663399',
+        backgroundColor: 'green',
         marginHorizontal: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     },
 
     buttonText: {
-        color: '#D8BFD8',
+        color: '#fff',
         fontSize: 14,
         fontWeight: 'bold',
         textAlign: 'center',

@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
+    fotoPerfil: {
+        width: 250,
+        height: 250,
+        borderRadius: 25,
+    }
 
 })
 

@@ -14,26 +14,31 @@ export default function AreaCasal({ navigation }) {
         const userID = getUserID();
         const casaisCollectionRef = firestore().collection('casais');
         try {
-            let casalData;
-            const querySnapshot = await casaisCollectionRef
-                .where('userRef1', '==', userID)
-                .get();
-    
-            if (!querySnapshot.empty) {
-                const doc = querySnapshot.docs[0];
-                casalData = doc.data();
-                setCasalId(doc.id); 
-            } else {
-                const querySnapshot2 = await casaisCollectionRef
-                    .where('userRef2', '==', userID)
-                    .get();
-                if (!querySnapshot2.empty) {
-                    const doc = querySnapshot2.docs[0];
-                    casalData = doc.data();
-                    setCasalId(doc.id); 
-                }
+            const userRef = await firestore().collection('usuarios').doc(userID).get();
+            const userData = userRef.data();
+
+            if (!userData || !userData.parceiroRef) {
+                console.error('Dados do usuário ou parceiro não encontrados.');
+                return;
             }
     
+            // Procure por um casal que tenha o userID no array de referências
+            const querySnapshot = await casaisCollectionRef
+                .where('arrayIds', 'array-contains', userID)
+                .get();
+    
+            let casalData;
+    
+            // Filtre os resultados para encontrar um documento que também contenha o parceiroRef
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                if (data.arrayIds.includes(userData.parceiroRef)) {
+                    casalData = data;
+                    setCasalId(doc.id);
+                }
+            });
+    
+            // Se encontrou o casal, defina os dados do casal e busque mais informações
             if (casalData) {
                 setDadosCasal(casalData);
                 await fetchDadosCasal(casalData);
@@ -42,6 +47,7 @@ export default function AreaCasal({ navigation }) {
             console.error(error);
         }
     };
+    
 
     const fetchDadosCasal = async (casalData) => {
         try {

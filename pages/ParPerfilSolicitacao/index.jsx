@@ -51,7 +51,8 @@ export default function ParPerfilSolicitacaoScreen({ route, navigation }){
                     }),
                     casaisCollectionRef.add({
                         userRef1: userId,
-                        userRef2: parId
+                        userRef2: parId,
+                        arrayIds: [ userId, parId ]
                     })
                 ]);
                 
@@ -94,7 +95,7 @@ export default function ParPerfilSolicitacaoScreen({ route, navigation }){
 
     return(
         <SafeAreaView style={styles.container}>
-            <Image style={{ width: 200, height: 200, borderRadius: 50 }} source={{ uri: user.image }}/>
+            <Image style={styles.fotoPerfil} source={{ uri: user.image }}/>
             <Text>{user.nome}</Text>
             <Text>{user.email}</Text>
             <TouchableOpacity onPress={aceitaSolicitacao}>

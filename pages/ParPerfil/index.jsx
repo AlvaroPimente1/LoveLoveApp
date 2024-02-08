@@ -7,6 +7,7 @@ import getUserID from "../../utils/getUserID";
 export default function ParPerfil({ route, navigation }){
     const { userId } = route.params; 
     const [ userData, setUserData ] = useState(null);
+    const [ textStatus, setTextStatus ] = useState('');
 
     const userParRef = firestore().collection('usuarios').doc(userId);
     const userRef = firestore().collection('usuarios').doc(getUserID());
@@ -18,6 +19,11 @@ export default function ParPerfil({ route, navigation }){
                 if (userSnapshot.exists) {
                     const userData = userSnapshot.data();
                     setUserData(userData);
+                    if(userData.comprometido){
+                        setTextStatus('Indisponível');
+                    } else {
+                        setTextStatus('Disponível');
+                    }
             } else {
                 console.log("Documento de usuário não encontrado.");
             }
@@ -28,6 +34,7 @@ export default function ParPerfil({ route, navigation }){
     
         fetchUserData();
         }, [userId]);
+        
 
         const solicitarConexao = async() => {
             await userRef.update({
@@ -51,15 +58,21 @@ export default function ParPerfil({ route, navigation }){
                     </View>
                     <Text>Nome: {userData.nome}</Text>
                     <Text>Email: {userData.email}</Text>
+                    <Text>Status: {textStatus}</Text>
+                    {
+                        userData.comprometido ? <Text></Text>
+                        :
+                        <TouchableOpacity
+                        onPress={solicitarConexao}
+                            >
+                                <Text>Conectar</Text>
+                        </TouchableOpacity>
+                    }
                 </View>
                 ) : (
                 <Text>Carregando informações do usuário...</Text>
                 )}
-                <TouchableOpacity
-                    onPress={solicitarConexao}
-                >
-                    <Text>Conectar</Text>
-                </TouchableOpacity>
+                <Text></Text>
             </SafeAreaView>
         );
 }

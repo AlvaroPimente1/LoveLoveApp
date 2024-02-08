@@ -14,9 +14,9 @@ export default function PerfilScreen(){
     const [ isEdit, setIsEdit ] = useState(false);
     const [ nome, setNome ] = useState(userData ? userData.nome : ''); 
     const [ image, setImage ] = useState('');
+    const userId = getUserID(); 
 
     const saveImageUrlToUser = async () => {
-        const userId = getUserID(); 
         try {
             await firestore().collection('usuarios').doc(userId).update({
                 image: image,
@@ -44,11 +44,7 @@ export default function PerfilScreen(){
                         const uri = response.assets[0].uri;
                         const url = await uploadImageStorage(uri);
                         setImage(url); 
-                        try{
-                            await saveImageUrlToUser();
-                        } catch(error){
-                            console.error(error);
-                        }
+                        await saveImageUrlToUser();
                     } 
                 });
             } catch(error) {
@@ -58,8 +54,16 @@ export default function PerfilScreen(){
     }
 
 
-    const removePhoto = () => {
-        setImage(null);
+    const removePhoto = async() => {
+        try {
+            setImage(null);
+            await firestore().collection('usuarios').doc(userId).update({
+                image: null,
+            });
+        } catch (error) {
+            console.error("Erro ao atualizar o documento do usuário:", error);
+        }
+
     }
 
     const handleSetEdit = () => {
@@ -109,6 +113,10 @@ export default function PerfilScreen(){
 
                                 <TouchableOpacity style={styles.containerFoto} onPress={() => removePhoto()}>                            
                                     <Icon name="remove" size={20} color="#fff" />
+                                </TouchableOpacity>
+                                
+                                <TouchableOpacity onPress={() => saveImageUrlToUser()}>
+                                    <Icon name="save" size={20} color="#fff"/>
                                 </TouchableOpacity>
                             </View>
                         </View>
