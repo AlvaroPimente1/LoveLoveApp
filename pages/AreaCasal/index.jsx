@@ -3,6 +3,7 @@ import { SafeAreaView, Text, View, Image, ScrollView, Button, TouchableOpacity }
 import styles from "./style";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
+import Loading from "../../components/Loading";
 
 export default function AreaCasal({ navigation }) {
     const [ dadosCasal, setDadosCasal ] = useState(null);
@@ -97,7 +98,7 @@ export default function AreaCasal({ navigation }) {
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.ButtonOpcoes}
-                                    onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
+                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId })}
                                 >
                                 <Image style={styles.IconButton} source={require('../../assets/images/mailIcon.png')}/>
                                     <Text style={styles.textBox}>Mensagens</Text>
@@ -132,7 +133,7 @@ export default function AreaCasal({ navigation }) {
                     </ScrollView>
                 </SafeAreaView>
             ) : (
-                <Text>Carregando informaçoes...</Text>
+                <Loading/>
             )}
         </>
     );

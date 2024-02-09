@@ -13,7 +13,6 @@ export default function HomeScreen(){
 
     const navigation = useNavigation();
     const userRef = firestore().collection('usuarios').doc(getUserID());
-    const userParRef = firestore().collection('usuarios').doc(userId);
 
     // Navegar para perfil do usuario selecionado
     const navigateToUserProfile = (userId) => {
@@ -45,6 +44,7 @@ export default function HomeScreen(){
 
     // Carrega informacoes do usuario buscado
     const fetchUserData = async () => {
+        const userParRef = firestore().collection('usuarios').doc(userId);
         try {
             const userParSnapshot = await userParRef.get();
             if (userParSnapshot.exists) {
@@ -69,25 +69,24 @@ export default function HomeScreen(){
         // Funcao para cancelar solicitacao de conexao
         const cancelaSolicitacao = async () => {
             try {
-                console.log('funcionando')
                 const snapshotUser = await userRef.get();
                 const userData = snapshotUser.data();
         
+                const parId = userData.solicitacao_feita[0];
+                const userParRef = firestore().collection('usuarios').doc(parId);
+                const userParSnapshot = await userParRef.get();
+                const userParData = userParSnapshot.data();
+        
                 if (userData && userData.solicitacao_feita) {
                     await userRef.update({
-                        solicitacao_feita: firestore.FieldValue.arrayRemove(userId)
+                        solicitacao_feita: firestore.FieldValue.arrayRemove(parId)
                     });
-
-                const snapshotParUser = await userParRef.get();
-                const userParData = snapshotParUser.data();
-
-                if(userParData && userParData.solicitacoes_recebidas){
-                    await userParRef.update({
-                        solicitacoes_recebidas: firestore.FieldValue.arrayRemove(getUserID())
-                    });
-                }
         
-                    console.log('Solicitação cancelada com sucesso.');
+                    if(userParData && userParData.solicitacoes_recebidas){
+                        await userParRef.update({
+                            solicitacoes_recebidas: firestore.FieldValue.arrayRemove(getUserID())
+                        });
+                    }
                 }
             } catch (error) {
                 console.error('Erro ao cancelar a solicitação:', error);

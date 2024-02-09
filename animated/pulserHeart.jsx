@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Animated, Text, View } from 'react-native';
-import Heart from '../components/heart';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const PulsingHeart = () => {
     const scale = useRef(new Animated.Value(1)).current; // Valor inicial para a animação
@@ -34,7 +34,7 @@ const PulsingHeart = () => {
             <Animated.Text style={{ 
                 transform: [{ scale }] 
             }}>
-                <Heart/>
+                <Icon name="heart" size={150} color="red"/>
             </Animated.Text>
         </View>
     );

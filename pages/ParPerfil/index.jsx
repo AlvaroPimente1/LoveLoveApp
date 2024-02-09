@@ -3,6 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 import { SafeAreaView, View, Text, Image, TouchableOpacity } from "react-native";
 import styles from "./style";
 import getUserID from "../../utils/getUserID";
+import Loading from "../../components/Loading";
 
 export default function ParPerfil({ route, navigation }){
     const { userId } = route.params; 
@@ -70,7 +71,7 @@ export default function ParPerfil({ route, navigation }){
                     }
                 </View>
                 ) : (
-                <Text>Carregando informações do usuário...</Text>
+                <Loading/>
                 )}
                 <Text></Text>
             </SafeAreaView>
