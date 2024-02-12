@@ -12,10 +12,36 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 25,
         borderWidth: 2,
-        borderColor: '#1a8fff'
+        borderColor: '#fff'
     },
 
     containerFoto: {
+        backgroundColor: '#1a8fff',
+        paddingHorizontal: 100,
+        flexDirection: 'row',
+        borderBottomRightRadius: 50,
+        borderBottomLeftRadius: 50,
+        paddingVertical: 50
+    },
+
+    containerInfo: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    
+    itensInfo: {
+        padding: 30,
+        backgroundColor: '#ebd9d2',
+        marginTop: 20,
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: '#1a8fff'
+    },
+
+    button: {
+        marginVertical: 10,
+        padding: 3,
+        
     }
 })
 

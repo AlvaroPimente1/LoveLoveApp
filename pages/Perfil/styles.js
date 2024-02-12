@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#ffede6',
-        justifyContent: 'center'
     },
 
     fotoPerfil: {
@@ -13,12 +12,13 @@ const styles = StyleSheet.create({
         height: 250,
         borderRadius: 25,
         borderWidth: 1,
-        borderColor: '#1a8fff'
+        borderColor: '#1a8fff',
+        marginTop: '10%'
     },
 
     containerFoto: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 
     containerInformacoes: {

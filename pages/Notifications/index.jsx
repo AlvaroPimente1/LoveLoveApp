@@ -8,6 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 export default function NotificationsScreen({ navigation }) {
     const [userParIds, setUserParIds] = useState([]);
     const [userInfo, setUserInfo] = useState([]);
+    const [ isArrayVazio, setIsArrayVazio ] = useState(false);
 
     useEffect(() => {
         const userID = getUserID();
@@ -25,6 +26,11 @@ export default function NotificationsScreen({ navigation }) {
                     if (userData && Array.isArray(userData.solicitacoes_recebidas)) {
                         setUserParIds(userData.solicitacoes_recebidas);
                         fetchUserDetails(userData.solicitacoes_recebidas);
+                        if(userData.solicitacoes_recebidas.length == 0){
+                            setIsArrayVazio(true);
+                        } else {
+                            setIsArrayVazio(false);
+                        }
                     } else {
                         console.log('O campo solicitacoes_recebidas não existe ou não é um array');
                     }
@@ -78,10 +84,15 @@ export default function NotificationsScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <FlatList
-                data={userInfo}
-                renderItem={renderItem}
-            />
+            {
+                isArrayVazio ?
+                    <Text>Nenhuma solicitação ainda :(</Text>
+                :
+                <FlatList
+                    data={userInfo}
+                    renderItem={renderItem}
+                />
+            }
         </SafeAreaView>
     );
 }

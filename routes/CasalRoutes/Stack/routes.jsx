@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import DrawerNavigatorCasal from "../Drawer/routes";
@@ -11,7 +10,17 @@ const Stack = createNativeStackNavigator();
 
 export default function RoutesCasal(){
     return(
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                backgroundColor: "#1a8fff", 
+                },
+                headerTintColor: "#fff", 
+                headerTitleStyle: {
+                fontWeight: "bold",
+                },
+            }}          
+        >
             <Stack.Screen name="DrawerNavigatorCasal" component={DrawerNavigatorCasal} options={{ headerShown: false }}/>
             <Stack.Screen name="CalendarioScreen" component={CalendarioScreen} options={{ headerShown: true }}/>
             <Stack.Screen name="TerminoScreen" component={TerminoScreen} options={{ headerShown: true }}/>

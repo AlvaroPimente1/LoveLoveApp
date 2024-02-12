@@ -36,11 +36,11 @@ export default function PerfilScreen(){
             maxWidth: 300, 
             maxHeight: 300, 
         };
-
-        if(getPermission()){
+    
+        if (getPermission()) {
             try {
                 launchImageLibrary(options, async response => {
-                    if(response.assets != undefined){
+                    if (response.assets && response.assets.length > 0) {
                         const uri = response.assets[0].uri;
                         const url = await uploadImageStorage(uri);
                         setImage(url); 
@@ -52,6 +52,7 @@ export default function PerfilScreen(){
             }
         }
     }
+    
 
 
     const removePhoto = async() => {

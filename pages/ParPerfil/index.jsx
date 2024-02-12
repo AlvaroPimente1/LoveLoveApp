@@ -53,25 +53,30 @@ export default function ParPerfil({ route, navigation }){
             <SafeAreaView style={styles.container}>
                 {userData ? (
                     
-                <View style={{ alignItems: 'center' }}>
+                <View>
                     <View style={styles.containerFoto}>
                         <Image style={styles.fotoPerfil} source={{ uri: userData.image }}/> 
                     </View>
-                    <Text>Nome: {userData.nome}</Text>
-                    <Text>Email: {userData.email}</Text>
-                    <Text>Status: {textStatus}</Text>
-                    {
-                        userData.comprometido ? <Text></Text>
-                        :
-                        <TouchableOpacity
-                        onPress={solicitarConexao}
-                            >
-                                <Text>Conectar</Text>
-                        </TouchableOpacity>
-                    }
+                    <View style={styles.containerInfo}>
+                        <View style={styles.itensInfo}>
+                            <Text>Nome: {userData.nome}</Text>
+                            <Text>Email: {userData.email}</Text>
+                            <Text>Status: {textStatus}</Text>
+                        </View>
+                        {
+                                userData.comprometido ? <Text></Text>
+                                :
+                                <TouchableOpacity
+                                style={styles.button}
+                                    onPress={solicitarConexao}
+                                >
+                                        <Text>Conectar</Text>
+                                </TouchableOpacity>
+                            }
+                    </View>
                 </View>
                 ) : (
-                <Loading/>
+                    <Loading/>
                 )}
                 <Text></Text>
             </SafeAreaView>
