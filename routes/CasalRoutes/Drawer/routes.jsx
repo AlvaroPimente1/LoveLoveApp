@@ -21,8 +21,8 @@ export default function DrawerNavigatorCasal(){
                 },
             }}
         >
-            <Drawer.Screen name="AreaCasalScreen" component={AreaCasal}/>
-            <Drawer.Screen name="PerfilScreen" component={PerfilScreen}/>
+            <Drawer.Screen name="AreaCasalScreen" component={AreaCasal} options={{ title: 'Home' }}/>
+            <Drawer.Screen name="PerfilScreen" component={PerfilScreen} options={{ title: 'Perfil' }}/>
         </Drawer.Navigator>
     )
 }

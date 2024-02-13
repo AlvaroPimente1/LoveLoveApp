@@ -25,7 +25,7 @@ export default function TerminoScreen({ navigation }){
     };
 
     useEffect(() => {
-        const intervalId = setInterval(fetchConselho, 4000); 
+        const intervalId = setInterval(fetchConselho, 2000); 
 
         return () => clearInterval(intervalId);
     }, []);

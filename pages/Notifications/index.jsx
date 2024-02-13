@@ -4,6 +4,8 @@ import { SafeAreaView, View, Text, FlatList, Image } from "react-native";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { ContainerCenterX, ContainerCenterXY } from "../../styled/global.styles";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function NotificationsScreen({ navigation }) {
     const [userParIds, setUserParIds] = useState([]);
@@ -83,16 +85,20 @@ export default function NotificationsScreen({ navigation }) {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <>
             {
                 isArrayVazio ?
+                <ContainerCenterXY>
                     <Text>Nenhuma solicitação ainda :(</Text>
+                </ContainerCenterXY>
                 :
-                <FlatList
-                    data={userInfo}
-                    renderItem={renderItem}
-                />
-            }
-        </SafeAreaView>
+                <ContainerCenterX>
+                    <FlatList
+                        data={userInfo}
+                        renderItem={renderItem}
+                    />
+                </ContainerCenterX>
+            }        
+        </>
     );
 }

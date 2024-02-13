@@ -3,7 +3,7 @@ import styles from "./style";
 import { SafeAreaView, View, Text, TouchableOpacity, Image } from "react-native";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
-import CriarShipp from "../../utils/criaShipp";
+import { ButtonConfirmar, TextButton, ButtonCancelar, TextInfos } from "../../styled/global.styles";
 
 export default function ParPerfilSolicitacaoScreen({ route, navigation }){
     const user = route.params.user;
@@ -95,16 +95,23 @@ export default function ParPerfilSolicitacaoScreen({ route, navigation }){
 
     return(
         <SafeAreaView style={styles.container}>
-            <Image style={styles.fotoPerfil} source={{ uri: user.image }}/>
-            <Text>{user.nome}</Text>
-            <Text>{user.email}</Text>
-            <TouchableOpacity onPress={aceitaSolicitacao}>
-                <Text>Aceitar</Text>
-            </TouchableOpacity>
+            <View style={styles.containerFoto}>
+                <Image style={styles.fotoPerfil} source={{ uri: user.image }}/>
+            </View>
+            <View style={styles.containerInfo}>
+                        <View style={styles.itensInfo}>
+                            <TextInfos>Nome: {user.nome}</TextInfos>
+                            <TextInfos>Email: {user.email}</TextInfos>
+                        </View>
+            </View>
 
-            <TouchableOpacity onPress={cancelaSolicitacao}>
-                <Text>Cancelar</Text>
-            </TouchableOpacity>
+            <ButtonConfirmar onPress={aceitaSolicitacao}>
+                <TextButton>Aceitar</TextButton>
+            </ButtonConfirmar>
+
+            <ButtonCancelar onPress={cancelaSolicitacao}>
+                <TextButton>Cancelar</TextButton>
+            </ButtonCancelar>
         </SafeAreaView>
     )
 }

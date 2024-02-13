@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 25,
         borderWidth: 2,
-        borderColor: '#fff'
+        borderColor: '#ff7e93'
     },
 
     containerFoto: {

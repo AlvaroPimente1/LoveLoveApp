@@ -31,6 +31,9 @@ export default function HomeScreen(){
                 } else {
                     setIsSolicitado(false);
                 }
+                if(userData.comprometido){
+                    navigation.navigate('RotasCasal');
+                }
             } else {
                 console.log("Documento não encontrado");
             }

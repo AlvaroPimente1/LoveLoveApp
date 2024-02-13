@@ -4,6 +4,7 @@ import { SafeAreaView, View, Text, Image, TouchableOpacity } from "react-native"
 import styles from "./style";
 import getUserID from "../../utils/getUserID";
 import Loading from "../../components/Loading";
+import { ButtonConfirmar, TextButton, TextInfos } from "../../styled/global.styles";
 
 export default function ParPerfil({ route, navigation }){
     const { userId } = route.params; 
@@ -59,19 +60,19 @@ export default function ParPerfil({ route, navigation }){
                     </View>
                     <View style={styles.containerInfo}>
                         <View style={styles.itensInfo}>
-                            <Text>Nome: {userData.nome}</Text>
-                            <Text>Email: {userData.email}</Text>
-                            <Text>Status: {textStatus}</Text>
+                            <TextInfos>Nome: {userData.nome}</TextInfos>
+                            <TextInfos>Email: {userData.email}</TextInfos>
+                            <TextInfos>Status: {textStatus}</TextInfos>
                         </View>
                         {
                                 userData.comprometido ? <Text></Text>
                                 :
-                                <TouchableOpacity
+                                <ButtonConfirmar
                                 style={styles.button}
                                     onPress={solicitarConexao}
                                 >
-                                        <Text>Conectar</Text>
-                                </TouchableOpacity>
+                                        <TextButton>Conectar</TextButton>
+                                </ButtonConfirmar>
                             }
                     </View>
                 </View>
