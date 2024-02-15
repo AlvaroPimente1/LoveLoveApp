@@ -42,3 +42,12 @@ export const TextInfos = styled.Text`
     
 `;
 
+export const TextTitle = styled.Text`
+    font-size: 23px;
+    color: #fff
+`;
+
+export const TextContainer = styled.Text`
+    font-size: 17px;
+    color: #fff
+`;

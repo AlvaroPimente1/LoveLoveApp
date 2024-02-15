@@ -88,6 +88,8 @@ export default function ParPerfilSolicitacaoScreen({ route, navigation }){
             await userParRef.update({
                 solicitacao_feita: []
             })
+
+            navigation.goBack();
         } catch(error){
             console.error(error);
         }

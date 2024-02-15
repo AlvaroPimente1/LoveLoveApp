@@ -23,7 +23,8 @@ export default function CadastroScreen({ navigation }){
                     .set({
                         nome: nome,
                         email: email,
-                        comprometido: false
+                        comprometido: false,
+                        solicitacao_feita: []
                     });
             
                 console.log('Sessão de usuário criada');

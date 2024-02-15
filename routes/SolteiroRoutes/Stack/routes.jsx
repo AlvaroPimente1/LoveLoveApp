@@ -22,9 +22,9 @@ export default function RoutesSolteiro(){
                     },
                 }}  
             >
-                <Stack.Screen name="HomeScreen" component={DrawerNavigatorSolteiros} options={{ headerShown: false }}/>
-                <Stack.Screen name="ParPerfilScreen" component={ParPerfil} options={{ headerShown: true }}/>
-                <Stack.Screen name="ParPerfilSolicitacaoScreen" component={ParPerfilSolicitacaoScreen} options={{ headerShown: true }}/>
+                <Stack.Screen name="HomeScreen" component={DrawerNavigatorSolteiros} options={{ headerShown: false, title: '' }}/>
+                <Stack.Screen name="ParPerfilScreen" component={ParPerfil} options={{ headerShown: true, title: 'Perfil' }}/>
+                <Stack.Screen name="ParPerfilSolicitacaoScreen" component={ParPerfilSolicitacaoScreen} options={{ headerShown: true, title: 'Perfil' }}/>
             </Stack.Navigator>
     )
 }

@@ -37,18 +37,17 @@ const LogOutButton = (props) => {
         <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
             <View style={{ marginVertical: 5 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 5 }}>
-{/*                     {
+{/*                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 5 }}>              {
                         userInfo.image ?
                             <Image style={{ width: 80, height: 80, borderRadius: 40 }} source={{ uri: userInfo.image }}/>
                             :
                             <ActivityIndicator size="large" color="#1a8fff" />
-                    } */}
+                    } 
                     <View style={{ paddingLeft: 5 }}>
                         <Text>{userInfo?.nome ?? ''}</Text>
                         <Text>{userInfo?.email ?? ''}</Text>
                     </View>
-                </View>
+                </View> */}
                 <Button title="Logout" onPress={handleLogout} />
             </View>
         </DrawerContentScrollView>

@@ -116,9 +116,9 @@ export default function PerfilScreen(){
                                     <Icon name="remove" size={20} color="#fff" />
                                 </TouchableOpacity>
                                 
-                                <TouchableOpacity onPress={() => saveImageUrlToUser()}>
+{/*                                 <TouchableOpacity onPress={() => saveImageUrlToUser()}>
                                     <Icon name="save" size={20} color="#fff"/>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
                         </View>
                         : 

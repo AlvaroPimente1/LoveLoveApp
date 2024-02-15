@@ -5,6 +5,8 @@ import { Calendar } from "react-native-calendars";
 import ModalAgenda from "../../components/ModalCalendario";
 import firestore from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { TextTitle, TextContainer } from "../../styled/global.styles";
+import { formatDate } from "../../utils/formatDate";
 
 export default function CalendarioScreen({ route }){
     const casalId = route.params.casalId
@@ -31,6 +33,7 @@ export default function CalendarioScreen({ route }){
                 .collection('agenda')
                 .doc(selectedDate)
                 .collection('compromisso')
+                .orderBy('dt_criado', 'desc')
                 .onSnapshot(querySnapshot => {
                     const eventsForDate = [];
                     querySnapshot.forEach(documentSnapshot => {
@@ -59,6 +62,7 @@ export default function CalendarioScreen({ route }){
                     titulo_compromisso: titulo,
                     descricao_compromisso: descricao,
                     data_compromisso: selectedDate,
+                    dt_criado: firestore.FieldValue.serverTimestamp()
                 });
         }
     };
@@ -83,14 +87,18 @@ export default function CalendarioScreen({ route }){
     };
 
     function renderItem({ item }){
+        const dataFormatada = formatDate(item.data_compromisso);
+
         return(
             <TouchableOpacity style={styles.containerLista}>
-                { item.titulo_compromisso ? <Text>{item.titulo_compromisso}</Text> : <Text>laele</Text> }
-                { item.descricao_compromisso ? <Text>{item.descricao_compromisso}</Text> : <Text>laele</Text> }
-                { item.data_compromisso ? <Text>{item.data_compromisso}</Text> : <Text>laele</Text> }
-                <TouchableOpacity   onPress={()=> deleteEvent(item.id)}>
-                        <Icon name="trash" size={20} color="#000"/>
-                </TouchableOpacity>
+                { item.titulo_compromisso ? <TextContainer>{item.titulo_compromisso}</TextContainer> : <Text>laele</Text> }
+                { item.descricao_compromisso ? <TextContainer>{item.descricao_compromisso}</TextContainer> : <Text>laele</Text> }
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    { item.data_compromisso ? <TextContainer>Criado em {dataFormatada}</TextContainer> : <Text>Carregando...</Text> }
+                    <TouchableOpacity   onPress={()=> deleteEvent(item.id)}>
+                            <Icon name="trash" size={20} color="#fff"/>
+                    </TouchableOpacity>
+                </View>
             </TouchableOpacity>
         )
     }
@@ -101,7 +109,6 @@ export default function CalendarioScreen({ route }){
             {
                 showCalendar ? 
                     <Calendar
-                        style={styles.agenda}
                         onDayPress={(day) => {
                             setSelectedDate(day.dateString);
                         }}
@@ -109,34 +116,46 @@ export default function CalendarioScreen({ route }){
                         markedDates={{
                             [selectedDate]: {
                                 selected: true,
-                                selectedColor: '#663399',
+                                selectedColor: '#1a8fff',
                             },
                         }}
                     />
                 :
                     null
             }
-                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                    <TouchableOpacity onPress={()=> setModalVisible(true)}>
-                        <Icon name="plus" size={20} color="#000"/>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: 20 }}>
+                    <TouchableOpacity style={styles.buttonCompromisso} onPress={()=> setModalVisible(true)}>
+                        <Text style={styles.textButtons}>Adicionar compromisso</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
+                        style={styles.buttonCompromisso}
                         onPress={handleShowCalendar}
                     >
                         {
                             showCalendar ?
-                                <Icon name="cancel" size={20} color="#000"/>
+                                <Text style={styles.textButtons}>Mostrar menos</Text>
                             :
-                                <Icon name="calendar" size={20} color="#000"/>
+                                <Text style={styles.textButtons}>Mostrar mais</Text>
                         }
                     </TouchableOpacity>
                 </View>
-            <FlatList
-                    data={events}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={renderItem}
-                />
+                <View style={styles.containerCompromissos}>
+                    { selectedDate ? <TextTitle>{selectedDate}</TextTitle> : <Text></Text> }
+                        {
+                            !events.length == 0 ? 
+                            <FlatList
+                            data={events}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={renderItem}
+                        />
+                        :
+
+                        <View style={{ alignItems: 'center', marginTop: '20%' }}>
+                            <Text style={{ color: '#fff' }}>Nenhum Compromisso marcado para este dia</Text>
+                        </View>
+                        }
+                </View>
             <ModalAgenda isModalVisible={isModalVisible} setModalVisible={setModalVisible} addEvent={addEvent} />
         </SafeAreaView>
     )

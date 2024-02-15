@@ -19,7 +19,6 @@ export default function HomeScreen(){
         navigation.navigate('ParPerfilScreen', { userId });
     };
 
-
     // Funcao para mudar componente caso usuario tenha solicitado conexao
     useEffect(() => {
     

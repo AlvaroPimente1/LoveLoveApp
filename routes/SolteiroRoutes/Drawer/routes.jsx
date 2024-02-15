@@ -45,7 +45,7 @@ export default function DrawerNavigatorSolteiros(){
             }}
         >
             <Drawer.Screen name="BuscaScreen" component={HomeScreen} options={{ title: 'Busca' }}/>
-            <Drawer.Screen name="NotificationsScreen" component={NotificationsScreen} options={{ title: `Notificações (${notificacoes})` }}/>
+            <Drawer.Screen name="NotificationsScreen" component={NotificationsScreen} options={{ title: `Notificações` }}/>
             <Drawer.Screen name="PerfilScreen" component={PerfilScreen} options={{ title: 'Perfil' }}/>
         </Drawer.Navigator>
     )

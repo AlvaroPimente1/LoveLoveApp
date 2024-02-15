@@ -68,10 +68,10 @@ export default function ParPerfil({ route, navigation }){
                                 userData.comprometido ? <Text></Text>
                                 :
                                 <ButtonConfirmar
-                                style={styles.button}
+                                    style={styles.button}
                                     onPress={solicitarConexao}
                                 >
-                                        <TextButton>Conectar</TextButton>
+                                    <TextButton>Conectar</TextButton>
                                 </ButtonConfirmar>
                             }
                     </View>

@@ -23,7 +23,7 @@ export default function ModalAgenda({ isModalVisible, setModalVisible, addEvent 
                         value={tituloCompromisso}
                         onChangeText={setTituloCompromisso}
                         placeholder="Digite o titulo"
-                        placeholderTextColor={'#000'}
+                        placeholderTextColor={'#fff'}
                     />
                     
                     <TextInput
@@ -31,12 +31,12 @@ export default function ModalAgenda({ isModalVisible, setModalVisible, addEvent 
                         value={descricaoCompromisso}
                         onChangeText={setDescricaoCompromisso}
                         placeholder="Digite a descrição"
-                        placeholderTextColor={'#000'}
+                        placeholderTextColor={'#fff'}
                     />
         
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
                         <TouchableOpacity
-                            style={styles.button}
+                            style={styles.buttonConfirma}
                             onPress={() => {
                                 addEvent(tituloCompromisso, descricaoCompromisso);
                                 setTituloCompromisso('');
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 
     modalView: {
         width: '80%',
-        backgroundColor: "#fff",
+        backgroundColor: "#1a8fff",
         borderRadius: 20,
         padding: 35,
         alignItems: "center",
@@ -82,13 +82,13 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         borderWidth: 1,
-        borderColor: '#fff'
+        borderColor: '#ff7e93'
     },
 
     input: {
         width: '100%',
         padding: 10,
-        borderColor: '#000',
+        borderColor: '#ff7e93',
         borderWidth: 1,
         marginBottom: 10,
         borderRadius: 5,
@@ -96,7 +96,15 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: 'green',
+        backgroundColor: '#ff7e93',
+        marginHorizontal: 10,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 20,
+    },
+
+    buttonConfirma: {
+        backgroundColor: '#ff7e93',
         marginHorizontal: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,

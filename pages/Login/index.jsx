@@ -15,8 +15,12 @@ export default function LoginScreen({ navigation }){
 
             if(await verificaCasal()){
                 navigation.navigate('RotasCasal');
+                setEmail('');
+                setSenha('');
             } else {
                 navigation.navigate('RotasSolteiro');
+                setEmail('');
+                setSenha('');
             }
         }
         catch(error){

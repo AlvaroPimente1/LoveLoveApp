@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     containerFoto: {
         backgroundColor: '#1a8fff',
         paddingHorizontal: 100,
-        flexDirection: 'row',
         borderBottomRightRadius: 50,
         borderBottomLeftRadius: 50,
         paddingVertical: 50

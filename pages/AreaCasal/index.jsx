@@ -23,7 +23,7 @@ export default function AreaCasal({ navigation }) {
                 return;
             }
     
-            // Procure por um casal que tenha o userID no array de referências
+            // Procurar por um casal que tenha o userID no array de referências
             const querySnapshot = await casaisCollectionRef
                 .where('arrayIds', 'array-contains', userID)
                 .get();
@@ -67,6 +67,24 @@ export default function AreaCasal({ navigation }) {
     }
 
     useEffect(() => {
+        const userRef = firestore().collection('usuarios').doc(getUserID());
+        const unsubscribe =  userRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                const userData =  doc.data();
+                if(!userData.comprometido){
+                    navigation.navigate('LoginScreen');
+                }
+            } else {
+                console.log("Documento não encontrado");
+            }
+        }, (error) => {
+            console.error("Erro ao observar o documento:", error);
+        });
+    
+        return () => unsubscribe();
+    }, [])
+
+    useEffect(() => {
         localizaColecaoCasal();
     }, []);
 
@@ -82,7 +100,7 @@ export default function AreaCasal({ navigation }) {
                         </View>
 
                         <View style={{ marginHorizontal: '5%' }}>
-                            <Text style={{ fontSize: 30, color: '#fff' }}>Bem vindos, marilialv!</Text>
+                            <Text style={{ fontSize: 30, color: '#fff' }}>Bem vindos!</Text>
                             <Text style={styles.textBox}>{dadosUsuario1.nome} e {dadosUsuario2.nome}</Text>
                         </View>
                     </View>
@@ -108,7 +126,9 @@ export default function AreaCasal({ navigation }) {
                             <View style={styles.containerOpcoes}
                                 onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
                             >
-                                <TouchableOpacity style={styles.ButtonOpcoes}>
+                                <TouchableOpacity style={styles.ButtonOpcoes}
+                                    onPress={() => navigation.navigate('DateScreen', { casalId: casalId })}
+                                >
                                 <Image style={styles.IconButton} source={require('../../assets/images/restaurantIcon.png')}/>
                                     <Text style={styles.textBox}>Dates</Text>
                                 </TouchableOpacity>
