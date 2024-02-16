@@ -14,8 +14,8 @@ export default function CalendarioScreen({ route }){
     const [ isModalVisible, setModalVisible ] = useState(false);
     const [ selectedDate, setSelectedDate ] = useState(null);
     const [ events, setEvents ] = useState([]);
-    const [ usuario, setUsuario ] = useState('');
     const [ showCalendar, setShowCalendar ] = useState(true);
+    // const [ datasMarcadas, setDatasMarcadas ] = useState({});
 
     function handleShowCalendar(){
         if(showCalendar){
@@ -49,6 +49,25 @@ export default function CalendarioScreen({ route }){
             return () => unsubscribe();
         }
     }, [selectedDate]);
+
+/*     useEffect(() => {
+        const unsubscribe = firestore()
+                .collection('casais')
+                .doc(casalId)
+                .collection('agenda')
+                .onSnapshot(querySnapshot => {
+                    const eventosMarcados = [];
+                    querySnapshot.forEach(documentSnapshot => {
+                        eventosMarcados.push({
+                            id: documentSnapshot.id,  
+                        });
+                    });
+                    setDatasMarcadas(eventosMarcados);
+                    
+                });
+
+            return () => unsubscribe();
+    }, []) */
 
     const addEvent = (titulo, descricao) => {
         if (selectedDate && titulo && descricao) {
@@ -87,7 +106,7 @@ export default function CalendarioScreen({ route }){
     };
 
     function renderItem({ item }){
-        const dataFormatada = formatDate(item.data_compromisso);
+        const dataFormatada = formatDate(item.dt_criado);
 
         return(
             <TouchableOpacity style={styles.containerLista}>
@@ -105,7 +124,7 @@ export default function CalendarioScreen({ route }){
 
     
     return(
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             {
                 showCalendar ? 
                     <Calendar
@@ -149,6 +168,7 @@ export default function CalendarioScreen({ route }){
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={renderItem}
                         />
+
                         :
 
                         <View style={{ alignItems: 'center', marginTop: '20%' }}>
@@ -157,6 +177,6 @@ export default function CalendarioScreen({ route }){
                         }
                 </View>
             <ModalAgenda isModalVisible={isModalVisible} setModalVisible={setModalVisible} addEvent={addEvent} />
-        </SafeAreaView>
+        </View>
     )
 }

@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
     containerLista: {
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderWidth: 1,
-        borderColor: '#fff',
-        backgroundColor: '#ff7e93',
+        borderWidth: 2,
+        borderColor: '#ff7e93',
+        backgroundColor: '#1a8fff',
         width: '100%',
         borderRadius: 10,
         marginVertical: 5

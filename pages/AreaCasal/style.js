@@ -13,15 +13,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         borderBottomStartRadius: 40,
         borderBottomEndRadius: 40, 
-        borderColor: '#000',
     },
 
     icon: {
-        width: 130, 
-        height: 130, 
+        width: 150, 
+        height: 150, 
         borderRadius: 100,
-        borderWidth: 1,
-        borderColor: '#fff',
+        borderWidth: 2,
+        borderColor: '#ff7e93',
         marginHorizontal: 20
     }, 
 

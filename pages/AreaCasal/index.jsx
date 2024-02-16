@@ -116,7 +116,7 @@ export default function AreaCasal({ navigation }) {
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.ButtonOpcoes}
-                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId })}
+                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, dadosUser1: dadosUsuario1 })}
                                 >
                                 <Image style={styles.IconButton} source={require('../../assets/images/mailIcon.png')}/>
                                     <Text style={styles.textBox}>Mensagens</Text>
