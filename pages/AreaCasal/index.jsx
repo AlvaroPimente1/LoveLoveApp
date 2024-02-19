@@ -9,6 +9,8 @@ export default function AreaCasal({ navigation }) {
     const [ dadosCasal, setDadosCasal ] = useState(null);
     const [ dadosUsuario1, setDadosUsuario1 ] = useState(null);
     const [ dadosUsuario2, setDadosUsuario2 ] = useState(null);
+    const [ user, setUser ] = useState(null);
+    const [ userPar, setUserPar ] = useState(null);
     const [ casalId, setCasalId ] = useState(null);
 
     const localizaColecaoCasal = async () => {
@@ -57,9 +59,27 @@ export default function AreaCasal({ navigation }) {
 
             if (userRef1.exists) {
                 setDadosUsuario1(userRef1.data());
+                if(dadosUsuario1.uid && dadosUsuario2.uid){
+                    if(dadosUsuario1.uid === getUserID()){
+                        setUser(dadosUsuario1);
+                        setUserPar(dadosUsuario2);
+                    } else {
+                        setUser(dadosUsuario2);
+                        setUserPar(dadosUsuario1)
+                    }
+                }
             }
             if (userRef2.exists) {
                 setDadosUsuario2(userRef2.data());
+                if(dadosUsuario1.uid && dadosUsuario2.uid){
+                    if(dadosUsuario1.uid === getUserID()){
+                        setUser(dadosUsuario1);
+                        setUserPar(dadosUsuario2);
+                    } else {
+                        setUser(dadosUsuario2);
+                        setUserPar(dadosUsuario1)
+                    }
+                }
             }
         } catch (error) {
             console.error(error);
@@ -101,7 +121,7 @@ export default function AreaCasal({ navigation }) {
 
                         <View style={{ marginHorizontal: '5%' }}>
                             <Text style={{ fontSize: 30, color: '#fff' }}>Bem vindos!</Text>
-                            <Text style={styles.textBox}>{dadosUsuario1.nome} e {dadosUsuario2.nome}</Text>
+                            <Text style={styles.textBox}>{user.nome} e {userPar.nome}</Text>
                         </View>
                     </View>
                     <ScrollView style={{ flex: 2 }}>
@@ -116,7 +136,7 @@ export default function AreaCasal({ navigation }) {
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.ButtonOpcoes}
-                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, dadosUser1: dadosUsuario1 })}
+                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, userInfo: user, userParInfo: userPar })}
                                 >
                                 <Image style={styles.IconButton} source={require('../../assets/images/mailIcon.png')}/>
                                     <Text style={styles.textBox}>Mensagens</Text>

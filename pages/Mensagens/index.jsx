@@ -4,16 +4,22 @@ import { SafeAreaView, Text, View, TextInput, TouchableOpacity, Alert } from "re
 import firestore from '@react-native-firebase/firestore';
 import moment from "moment";
 import getUserID from "../../utils/getUserID";
+import { ContainerCenterXY } from "../../styled/global.styles";
 
 export default function MensagensScreen({ route }){
-    const casalId = route.params.casalId
-    const dadosUsuario1 = route.params.dadosUser1
-    const dataAtual = moment().format('YYYYMMDD');
-    const userId = getUserID();
-    const casalRef = firestore().collection('casais').doc(casalId).collection('mensagens').doc(dataAtual).collection('id').doc(userId);
-
     const [ isEnviado, setIsEnviado ] = useState(false);
     const [ text, setText ] = useState('');
+
+    const casalId = route.params.casalId
+    const userInfo = route.params.userInfo
+    const userParInfo = route.params.userParInfo
+    
+    const dataAtual = moment().format('YYYYMMDD');
+    const userId = getUserID();
+
+    const mensagemRef = firestore().collection('casais').doc(casalId).collection('mensagens').doc(dataAtual).collection('id').doc(userId);
+    //const mensagemParRef = firestore().collection('casais').doc(casalId).collection('mensagens').doc(dataAtual).collection('id').doc(userPar);
+
 
     const enviarTexto = async () => {
         try{
@@ -27,7 +33,7 @@ export default function MensagensScreen({ route }){
     }
 
     useEffect(() => {
-        const unsubscribe =  casalRef.onSnapshot((doc) => {
+        const unsubscribe =  mensagemRef.onSnapshot((doc) => {
             if (doc.exists) {
                 const casalData =  doc.data();
                 if(casalData.mensagem){
@@ -43,19 +49,19 @@ export default function MensagensScreen({ route }){
         return () => unsubscribe();
     }, [])
 
+
     return(
-        <SafeAreaView>
+        <ContainerCenterXY>
             {
                 isEnviado ?
-                <Text>enviado ja</Text>
+                <Text>{userInfo.nome}</Text>
                 :
                 <View>
-                <Text>{dadosUsuario1.nome}</Text>
 
                 <TextInput
                     value={text}
                     onChangeText={setText}
-                    placeholder="Texto"
+                    placeholder="Envie sua mensagem do dia..."
                 />
 
                 <TouchableOpacity onPress={enviarTexto}>
@@ -63,6 +69,6 @@ export default function MensagensScreen({ route }){
                 </TouchableOpacity>
                 </View>
             }
-        </SafeAreaView>
+        </ContainerCenterXY>
     )
 }
