@@ -1,42 +1,37 @@
 import React, { useState, useEffect } from "react";
-import styles from "./style";
-import { SafeAreaView, Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
+import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import firestore from '@react-native-firebase/firestore';
 import moment from "moment";
 import getUserID from "../../utils/getUserID";
 import { ContainerCenterXY } from "../../styled/global.styles";
 
 export default function MensagensScreen({ route }){
-    const [ isEnviado, setIsEnviado ] = useState(false);
-    const [ text, setText ] = useState('');
+    const [isEnviado, setIsEnviado] = useState(false);
+    const [text, setText] = useState('');
 
-    const casalId = route.params.casalId
-    const userInfo = route.params.userInfo
-    const userParInfo = route.params.userParInfo
-    
+    const { casalId, userInfo, userParInfo } = route.params;
+
     const dataAtual = moment().format('YYYYMMDD');
     const userId = getUserID();
-
+    
     const mensagemRef = firestore().collection('casais').doc(casalId).collection('mensagens').doc(dataAtual).collection('id').doc(userId);
-    //const mensagemParRef = firestore().collection('casais').doc(casalId).collection('mensagens').doc(dataAtual).collection('id').doc(userPar);
-
 
     const enviarTexto = async () => {
-        try{
-            await casalRef.set({
+        try {
+            await mensagemRef.set({
                 mensagem: text,
                 dt_corrente: firestore.FieldValue.serverTimestamp()
-            })
+            });
         } catch(error) {
             console.log(error);
         }
-    }
+    };
 
     useEffect(() => {
         const unsubscribe =  mensagemRef.onSnapshot((doc) => {
             if (doc.exists) {
-                const casalData =  doc.data();
-                if(casalData.mensagem){
+                const casalData = doc.data();
+                if (casalData?.mensagem) {
                     setIsEnviado(true);
                 }
             } else {
@@ -47,8 +42,7 @@ export default function MensagensScreen({ route }){
         });
     
         return () => unsubscribe();
-    }, [])
-
+    }, []);
 
     return(
         <ContainerCenterXY>
@@ -57,18 +51,16 @@ export default function MensagensScreen({ route }){
                 <Text>{userInfo.nome}</Text>
                 :
                 <View>
-
-                <TextInput
-                    value={text}
-                    onChangeText={setText}
-                    placeholder="Envie sua mensagem do dia..."
-                />
-
-                <TouchableOpacity onPress={enviarTexto}>
-                    <Text>Enviar</Text>
-                </TouchableOpacity>
+                    <TextInput
+                        value={text}
+                        onChangeText={setText}
+                        placeholder="Envie sua mensagem do dia..."
+                    />
+                    <TouchableOpacity onPress={enviarTexto}>
+                        <Text>Enviar</Text>
+                    </TouchableOpacity>
                 </View>
             }
         </ContainerCenterXY>
-    )
+    );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, View, Image, ScrollView, Button, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, View, Image, ScrollView, Button, TouchableOpacity, Alert } from "react-native";
 import styles from "./style";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
@@ -7,8 +7,6 @@ import Loading from "../../components/Loading";
 
 export default function AreaCasal({ navigation }) {
     const [ dadosCasal, setDadosCasal ] = useState(null);
-    const [ dadosUsuario1, setDadosUsuario1 ] = useState(null);
-    const [ dadosUsuario2, setDadosUsuario2 ] = useState(null);
     const [ user, setUser ] = useState(null);
     const [ userPar, setUserPar ] = useState(null);
     const [ casalId, setCasalId ] = useState(null);
@@ -57,34 +55,23 @@ export default function AreaCasal({ navigation }) {
             const userRef1 = await firestore().collection('usuarios').doc(casalData.userRef1).get();
             const userRef2 = await firestore().collection('usuarios').doc(casalData.userRef2).get();
 
-            if (userRef1.exists) {
-                setDadosUsuario1(userRef1.data());
-                if(dadosUsuario1.uid && dadosUsuario2.uid){
-                    if(dadosUsuario1.uid === getUserID()){
-                        setUser(dadosUsuario1);
-                        setUserPar(dadosUsuario2);
-                    } else {
-                        setUser(dadosUsuario2);
-                        setUserPar(dadosUsuario1)
-                    }
-                }
-            }
-            if (userRef2.exists) {
-                setDadosUsuario2(userRef2.data());
-                if(dadosUsuario1.uid && dadosUsuario2.uid){
-                    if(dadosUsuario1.uid === getUserID()){
-                        setUser(dadosUsuario1);
-                        setUserPar(dadosUsuario2);
-                    } else {
-                        setUser(dadosUsuario2);
-                        setUserPar(dadosUsuario1)
-                    }
-                }
+            const userData1 = userRef1.exists ? userRef1.data() : null;
+            const userData2 = userRef2.exists ? userRef2.data() : null;
+
+            if (userData1 && userData2) {
+                if (userData1.uid === getUserID()) {
+                    setUser(userData1);
+                    setUserPar(userData2);
+                } else if(userData2.uid === getUserID()) {
+                    setUser(userData2);
+                    setUserPar(userData1);
+                } 
             }
         } catch (error) {
             console.error(error);
         }
     }
+    
 
     useEffect(() => {
         const userRef = firestore().collection('usuarios').doc(getUserID());
@@ -110,13 +97,13 @@ export default function AreaCasal({ navigation }) {
 
     return (
         <>
-            {dadosCasal && dadosUsuario1 && dadosUsuario2 ? (
+            {dadosCasal && user && userPar ? (
                 <SafeAreaView style={styles.container}>
                     <View style={styles.banner}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Image style={styles.icon} source={{ uri: dadosUsuario1.image }} /> 
+                            <Image style={styles.icon} source={{ uri: user.image }} /> 
                         
-                            <Image style={styles.icon} source={{ uri: dadosUsuario2.image }} /> 
+                            <Image style={styles.icon} source={{ uri: userPar.image }} /> 
                         </View>
 
                         <View style={{ marginHorizontal: '5%' }}>
@@ -136,7 +123,7 @@ export default function AreaCasal({ navigation }) {
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.ButtonOpcoes}
-                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, userInfo: user, userParInfo: userPar })}
+                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, user: user, userPar: userPar })}
                                 >
                                 <Image style={styles.IconButton} source={require('../../assets/images/mailIcon.png')}/>
                                     <Text style={styles.textBox}>Mensagens</Text>
