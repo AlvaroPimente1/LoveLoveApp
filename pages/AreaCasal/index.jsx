@@ -27,9 +27,9 @@ export default function AreaCasal({ navigation }) {
             const querySnapshot = await casaisCollectionRef
                 .where('arrayIds', 'array-contains', userID)
                 .get();
-    
+
             let casalData;
-    
+
             // Filtre os resultados para encontrar um documento que também contenha o parceiroRef
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
@@ -71,7 +71,6 @@ export default function AreaCasal({ navigation }) {
             console.error(error);
         }
     }
-    
 
     useEffect(() => {
         const userRef = firestore().collection('usuarios').doc(getUserID());
@@ -123,7 +122,7 @@ export default function AreaCasal({ navigation }) {
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.ButtonOpcoes}
-                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, user: user, userPar: userPar })}
+                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, userInfo: user, userParInfo: userPar })}
                                 >
                                 <Image style={styles.IconButton} source={require('../../assets/images/mailIcon.png')}/>
                                     <Text style={styles.textBox}>Mensagens</Text>
