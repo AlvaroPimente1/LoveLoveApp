@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from "react-native";
 import firestore from '@react-native-firebase/firestore';
+import styles from "./style";
 import moment from "moment";
 import 'moment/locale/pt-br'; 
 import getUserID from "../../utils/getUserID";
@@ -31,22 +32,28 @@ export default function MensagensScreen({ route }){
                 mensagem: text,
                 dt_corrente: firestore.FieldValue.serverTimestamp()
             });
-    
+
             const mensagemAntigaRef = casalRef.collection('mensagens').doc(dataAnterior).collection('id').doc(userParInfo.uid);
             const mensagemAntigaSnapShot = await mensagemAntigaRef.get();
-    
+
             if(mensagemPar && mensagemAntigaSnapShot.exists){
-                //incrementar um no novo campo do documento do casal
-                Alert.alert('funcionou');
-            } else {
-                //nao fazer nada
-                Alert.alert('firme');
+                const snapshotCasal = await casalRef.get();
+                const casalData = snapshotCasal.data();
+
+                if (casalData && casalData.dias_engajados !== undefined) {
+                    await casalRef.update({
+                        dias_engajados: casalData.dias_engajados + 1
+                    });
+                } else {
+                    console.log('Dados do casal não encontrados');
+                }
             }
-    
         } catch(error) {
             console.log(error);
+            Alert.alert('Erro', 'Não foi possível enviar a mensagem ou atualizar os dias engajados.');
         }
     };
+    
 
     useEffect(() => {
         const unsubscribe =  mensagemRef.onSnapshot((doc) => {
@@ -84,8 +91,8 @@ export default function MensagensScreen({ route }){
     }, []);
 
     return(
-        <ContainerCenterX>
-            <View>
+        <SafeAreaView style={styles.container}>
+            <View style={{ alignItems: 'center' }}>
                 <TextTitleBlack>{dataAtualTitulo}</TextTitleBlack>
             </View>
             {
@@ -117,6 +124,6 @@ export default function MensagensScreen({ route }){
                     </TouchableOpacity>
                 </View>
             }
-        </ContainerCenterX>
+        </SafeAreaView>
     );
 }

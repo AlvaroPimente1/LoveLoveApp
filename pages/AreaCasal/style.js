@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         borderBottomStartRadius: 40,
         borderBottomEndRadius: 40, 
+        paddingVertical: 15
     },
 
     icon: {

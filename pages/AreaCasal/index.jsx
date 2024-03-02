@@ -4,6 +4,7 @@ import styles from "./style";
 import firestore from '@react-native-firebase/firestore';
 import getUserID from "../../utils/getUserID";
 import Loading from "../../components/Loading";
+import ButtonMenu from "../../components/ButtonsMenu";
 
 export default function AreaCasal({ navigation }) {
     const [ dadosCasal, setDadosCasal ] = useState(null);
@@ -114,37 +115,31 @@ export default function AreaCasal({ navigation }) {
                         <View style={{ marginHorizontal: 10, marginTop: 8 }}>
 
                             <View style={styles.containerOpcoes}>
-                                <TouchableOpacity style={styles.ButtonOpcoes}
+                                <ButtonMenu
+                                    icon={require('../../assets/images/calendarioIcon.png')}
+                                    label="Calendário"
                                     onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
-                                >
-                                    <Image style={styles.IconButton} source={require('../../assets/images/calendarioIcon.png')}/>
-                                    <Text style={styles.textBox}>Calendário</Text>
-                                </TouchableOpacity>
+                                />
 
-                                <TouchableOpacity style={styles.ButtonOpcoes}
+                                <ButtonMenu
+                                    icon={require('../../assets/images/mailIcon.png')}
+                                    label="Mensagens"
                                     onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, userInfo: user, userParInfo: userPar })}
-                                >
-                                <Image style={styles.IconButton} source={require('../../assets/images/mailIcon.png')}/>
-                                    <Text style={styles.textBox}>Mensagens</Text>
-                                </TouchableOpacity>
+                                />
                             </View>
 
-                            <View style={styles.containerOpcoes}
-                                onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
-                            >
-                                <TouchableOpacity style={styles.ButtonOpcoes}
+                            <View style={styles.containerOpcoes}>
+                                <ButtonMenu
+                                    icon={require('../../assets/images/restaurantIcon.png')}
+                                    label="Dates"
                                     onPress={() => navigation.navigate('DateScreen', { casalId: casalId })}
-                                >
-                                <Image style={styles.IconButton} source={require('../../assets/images/restaurantIcon.png')}/>
-                                    <Text style={styles.textBox}>Dates</Text>
-                                </TouchableOpacity>
+                                />
 
-                                <TouchableOpacity style={styles.ButtonOpcoes}
+                                <ButtonMenu
+                                    icon={require('../../assets/images/Amigos.png')}
+                                    label="Casais Amigos"
                                     onPress={() => navigation.navigate('CalendarioScreen', { casalId: casalId })}
-                                >
-                                <Image style={styles.IconButton} source={require('../../assets/images/Amigos.png')}/>
-                                    <Text style={styles.textBox}>Casais Amigos</Text>
-                                </TouchableOpacity>
+                                />
                             </View>
 
                         <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
