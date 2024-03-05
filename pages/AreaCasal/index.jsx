@@ -124,7 +124,7 @@ export default function AreaCasal({ navigation }) {
                                 <ButtonMenu
                                     icon={require('../../assets/images/mailIcon.png')}
                                     label="Mensagens"
-                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, userInfo: user, userParInfo: userPar })}
+                                    onPress={() => navigation.navigate('MensagemScreen', { casalId: casalId, userInfo: user, userParInfo: userPar, dadosCasal: dadosCasal })}
                                 />
                             </View>
 

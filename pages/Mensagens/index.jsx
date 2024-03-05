@@ -17,6 +17,7 @@ export default function MensagensScreen({ route }){
     const casalId = route.params.casalId;
     const userInfo = route.params.userInfo;
     const userParInfo = route.params.userParInfo;
+    const dadosCasal = route.params.dadosCasal;
 
     const dataAtual = moment().format('YYYYMMDD');
     const dataAtualTitulo = moment().locale('pt-br').format('LL');
@@ -37,16 +38,17 @@ export default function MensagensScreen({ route }){
             const mensagemAntigaSnapShot = await mensagemAntigaRef.get();
 
             if(mensagemPar && mensagemAntigaSnapShot.exists){
-                const snapshotCasal = await casalRef.get();
-                const casalData = snapshotCasal.data();
-
-                if (casalData && casalData.dias_engajados !== undefined) {
+                if (dadosCasal) {
                     await casalRef.update({
-                        dias_engajados: casalData.dias_engajados + 1
+                        dias_engajados: dadosCasal.dias_engajados + 1
                     });
                 } else {
                     console.log('Dados do casal não encontrados');
                 }
+            } else if(mensagemPar){
+                await casalRef.update({
+                    dias_engajados: 1
+                });
             }
         } catch(error) {
             console.log(error);
@@ -90,10 +92,29 @@ export default function MensagensScreen({ route }){
         return () => unsubscribe();
     }, []);
 
+/*     useEffect(() => {
+        if(!mensagemPar && !mensagemUsuario) {
+            const unsubscribe = mensagemAntigaRef.onSnapshot(snapshot => {
+                if (snapshot.size === 2) {
+                    console.log('nada muda, continua engajado')
+                } else {
+                    casalRef.update({
+                        dias_engajados: 0
+                    })
+                }
+            }, (error) => {
+                console.error("Erro ao observar a coleção:", error);
+            });
+        
+            return () => unsubscribe();            
+        }
+    }, []); */
+
     return(
         <SafeAreaView style={styles.container}>
             <View style={{ alignItems: 'center' }}>
                 <TextTitleBlack>{dataAtualTitulo}</TextTitleBlack>
+                <TextTitleBlack>{dadosCasal.dias_engajados}</TextTitleBlack>
             </View>
             {
                 isEnviado ?
