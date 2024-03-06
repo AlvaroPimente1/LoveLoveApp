@@ -27,6 +27,8 @@ export default function MensagensScreen({ route }){
     const mensagemRef = casalRef.collection('mensagens').doc(dataAtual).collection('id').doc(userId);
     const mensagemParRef = casalRef.collection('mensagens').doc(dataAtual).collection('id').doc(userParInfo.uid);
 
+    const mensagemAntigaRef = casalRef.collection('mensagens').doc(dataAnterior).collection('id');
+
     const enviarTexto = async () => {
         try {
             await mensagemRef.set({
@@ -92,7 +94,7 @@ export default function MensagensScreen({ route }){
         return () => unsubscribe();
     }, []);
 
-/*     useEffect(() => {
+    useEffect(() => {
         if(!mensagemPar && !mensagemUsuario) {
             const unsubscribe = mensagemAntigaRef.onSnapshot(snapshot => {
                 if (snapshot.size === 2) {
@@ -108,7 +110,7 @@ export default function MensagensScreen({ route }){
         
             return () => unsubscribe();            
         }
-    }, []); */
+    }, []); 
 
     return(
         <SafeAreaView style={styles.container}>
