@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView, ScrollView } from "react-native";
 import firestore from '@react-native-firebase/firestore';
 import styles from "./style";
 import moment from "moment";
 import 'moment/locale/pt-br'; 
 import getUserID from "../../utils/getUserID";
-import { TextTitleBlack, ContainerCenterX } from "../../styled/global.styles";
+import { TextTitleBlack } from "../../styled/global.styles";
+import { Image } from "react-native";
 
 export default function MensagensScreen({ route }){
     const [ isEnviado, setIsEnviado ] = useState(false);
@@ -51,13 +52,14 @@ export default function MensagensScreen({ route }){
                 await casalRef.update({
                     dias_engajados: 1
                 });
+            } else {
+                Alert.alert('miado')
             }
         } catch(error) {
             console.log(error);
             Alert.alert('Erro', 'Não foi possível enviar a mensagem ou atualizar os dias engajados.');
         }
     };
-    
 
     useEffect(() => {
         const unsubscribe =  mensagemRef.onSnapshot((doc) => {
@@ -98,7 +100,7 @@ export default function MensagensScreen({ route }){
         if(!mensagemPar && !mensagemUsuario) {
             const unsubscribe = mensagemAntigaRef.onSnapshot(snapshot => {
                 if (snapshot.size === 2) {
-                    console.log('nada muda, continua engajado')
+                    console.log('Nada muda, continua engajado')
                 } else {
                     casalRef.update({
                         dias_engajados: 0
@@ -114,35 +116,60 @@ export default function MensagensScreen({ route }){
 
     return(
         <SafeAreaView style={styles.container}>
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ alignItems: 'center', marginVertical: '4%' }}>
                 <TextTitleBlack>{dataAtualTitulo}</TextTitleBlack>
-                <TextTitleBlack>{dadosCasal.dias_engajados}</TextTitleBlack>
+                <TextTitleBlack style={{ marginVertical: 5 }}>{dadosCasal.dias_engajados}🔥</TextTitleBlack>
             </View>
             {
                 isEnviado ?
-                <View>
+                <View style={styles.conteudoMain}>
                     {
                         mensagemPar ?
-                        <Text>{mensagemPar}</Text>
+                        <View style={styles.containerMensagem}>
+                            <Image style={styles.iconPerfil} source={{ uri: userParInfo.image }}/>
+                            <View>
+                                <Text style={{ marginLeft: 10, fontSize: 16, color: '#fff' }}>{userParInfo.nome}</Text>    
+                                <Text style={{ marginLeft: 10, fontSize: 15, color: '#fff' }}>{mensagemPar}</Text>    
+                            </View> 
+                        </View>
                         :
-                        <Text>{userParInfo.nome} ainda não enviou mensagem!</Text>
+                        <View>
+                            <Text>{userParInfo.nome} ainda não enviou mensagem!</Text>
+                        </View>
                     }
-                    <Text>{mensagemUsuario}</Text>
+                    <View style={styles.containerMensagem}>
+                        <Image style={styles.iconPerfil} source={{ uri: userInfo.image }}/>
+                        <View>
+                            <Text style={{ marginLeft: 10, fontSize: 16, color: '#fff' }}>{userInfo.nome}</Text>    
+                            <Text style={{ marginLeft: 10, fontSize: 15, color: '#fff' }}>{mensagemUsuario}</Text>    
+                        </View>
+                    </View>
                 </View>
                 :
-                <View>
+                <View style={styles.conteudoMain}>
                     {
                         mensagemPar ?
-                        <Text style={{ backgroundColor: '#ebd9d2', color: '#ebd9d2', borderRadius: 20 }}>{mensagemPar}</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text>{userParInfo.nome} mandou mensagem!</Text>
+                            <Text style={styles.mensagemBorrada}>{mensagemPar}</Text>
+                        </View>
                         :
-                        <Text>{userParInfo.nome} ainda não enviou mensagem!</Text>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text>{userParInfo.nome} ainda não enviou mensagem!</Text>
+                            <Text>Seja o primeiro!</Text>
+                        </View>
                     }
                     <TextInput
+                        multiline={true}
+                        numberOfLines={10}
                         value={text}
                         onChangeText={setText}
                         placeholder="Envie sua mensagem do dia..."
+                        style={styles.input}
                     />
-                    <TouchableOpacity onPress={enviarTexto}>
+                    <TouchableOpacity 
+                        style={styles.button}
+                        onPress={enviarTexto}>
                         <Text>Enviar</Text>
                     </TouchableOpacity>
                 </View>
