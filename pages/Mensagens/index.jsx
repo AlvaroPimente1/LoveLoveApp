@@ -118,7 +118,12 @@ export default function MensagensScreen({ route }){
         <SafeAreaView style={styles.container}>
             <View style={{ alignItems: 'center', marginVertical: '4%' }}>
                 <TextTitleBlack>{dataAtualTitulo}</TextTitleBlack>
-                <TextTitleBlack style={{ marginVertical: 5 }}>{dadosCasal.dias_engajados}🔥</TextTitleBlack>
+                {
+                    mensagemPar && isEnviado ?
+                    <TextTitleBlack style={{ marginVertical: 5 }}>{dadosCasal.dias_engajados + 1}🔥</TextTitleBlack>
+                    : 
+                    <TextTitleBlack style={{ marginVertical: 5 }}>{dadosCasal.dias_engajados}🔥</TextTitleBlack>
+                }
             </View>
             {
                 isEnviado ?
@@ -134,7 +139,7 @@ export default function MensagensScreen({ route }){
                         </View>
                         :
                         <View>
-                            <Text>{userParInfo.nome} ainda não enviou mensagem!</Text>
+                            <Text style={{ color: '#ffede6' }}>{userParInfo.nome} ainda não enviou mensagem!</Text>
                         </View>
                     }
                     <View style={styles.containerMensagem}>
@@ -155,8 +160,7 @@ export default function MensagensScreen({ route }){
                         </View>
                         :
                         <View style={{ alignItems: 'center' }}>
-                            <Text>{userParInfo.nome} ainda não enviou mensagem!</Text>
-                            <Text>Seja o primeiro!</Text>
+                            <Text style={{ color: '#ffede6' }}>{userParInfo.nome} ainda não enviou mensagem!</Text>
                         </View>
                     }
                     <TextInput
@@ -170,7 +174,7 @@ export default function MensagensScreen({ route }){
                     <TouchableOpacity 
                         style={styles.button}
                         onPress={enviarTexto}>
-                        <Text>Enviar</Text>
+                        <Text style={{ color: '#ffede6' }}>Enviar</Text>
                     </TouchableOpacity>
                 </View>
             }

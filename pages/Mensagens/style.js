@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        padding: 7, 
+        padding: 10, 
         backgroundColor: '#ffede6', 
         borderRadius: 10,
         marginVertical: 15,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 
     button: {
         padding: 10,
-        backgroundColor: '#',
+        backgroundColor: '#ff7e93',
         borderRadius: 10,
     },
 
@@ -34,8 +34,9 @@ const styles = StyleSheet.create({
     mensagemBorrada: {
         backgroundColor: '#ebd9d2', 
         color: '#ebd9d2', 
-        borderRadius: 20, 
-        marginTop: 3
+        borderRadius: 50, 
+        marginTop: 3,
+        minWidth: '50%'
     },
 
     containerMensagem: {
